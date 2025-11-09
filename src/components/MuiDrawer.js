@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import { useState } from "react";
 import Box from '@mui/material/Box';
@@ -105,7 +104,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isPause, setIsPause] = useState(false);
 
@@ -119,7 +118,7 @@ export default function MiniDrawer() {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
+      <CssBaseline />v
       {/* Header */}
       <AppBar position="fixed" open={open}>
         <Toolbar>
