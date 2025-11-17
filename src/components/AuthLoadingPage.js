@@ -1,7 +1,10 @@
-// src/AuthLoadingPage.jsx
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress, Typography, useTheme } from "@mui/material";
+
+/* 
+ Page de chargement où l'on vérifiera l'identité de l'utilisateur
+*/
 
 export default function AuthLoadingPage () {
   const navigate = useNavigate();

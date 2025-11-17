@@ -1,9 +1,11 @@
-// Reçoit un fichier audio en props et appelle l'API pour la retrnascription
 import Box from "@mui/material/Box";
 import Divider from '@mui/material/Divider';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-
-
+/*
+Composant qui affiche une retranscription d'un audio
+Props : 
+{audioSource} -> chemin vers l'audio utilisé dans la balise audio afin de permettre à l'utilisateur de lire l'audio
+*/
 export default function Transcriber({audioSource}){
     return(
         <Box sx = {{
@@ -14,7 +16,7 @@ export default function Transcriber({audioSource}){
             gap : '10px'
         }}>
             <Box sx = {{ width: '100%'}}>
-                <TextareaAutosize 
+                <TextareaAutosize
                 minRows={3}
                 maxRows={80}
                 style={{width: '100%'}}>     

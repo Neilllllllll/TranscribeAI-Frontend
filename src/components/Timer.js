@@ -2,6 +2,13 @@ import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+/*
+Composant qui affiche un timer
+Props : 
+{isRecording} -> est a true le timer s'incrémente 
+{isPause} -> est a true le timer se met en pause 
+*/
+
 const Timer = ({isRecording, isPause}) => {
   const [count, setCount] = useState(0);
 

@@ -1,11 +1,15 @@
-// Implémenter la logique d'exportation + s'occuper du style !
-
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { Button, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
+// Implémenter la logique d'exportation + s'occuper du style !
+/* 
+Composant qui affiche un bouton permettant à l'utilisateur d'exporter ses transcriptions
+Props : 
+{transcriptionTexte} -> Le texte retranscrit
+*/
 export default function Exporter() {
   const [open, setOpen] = React.useState(false);
 
