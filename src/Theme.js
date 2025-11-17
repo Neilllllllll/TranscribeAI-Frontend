@@ -28,7 +28,10 @@ let theme = createTheme({
       separator: '#2E2E32',
       icon: '#E5E5E7',
       iconHover: '#00ADB5', 
-      iconDisabled: '#5A5A5C'
+      iconDisabled: '#5A5A5C',
+      listItemHover: '#1f1f1f8a', 
+      textHover: '#007C82',
+      textDisabled: '#8e8e8e',
     },
   },
 
@@ -126,6 +129,35 @@ let theme = createTheme({
         }),
       },
     },
+    // Personnalisation des ListItemButton MUI
+    MuiListItemButton: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          transition: 'color 0.3s ease',
+
+          // Hover sur le texte
+          '&:hover .MuiListItemText-primary': {
+            color: theme.palette.element.textHover,
+          },
+
+          // Hover sur l'icone
+          '&:hover .MuiSvgIcon-root': {
+            color: theme.palette.element.iconHover,
+          },
+
+          // Disabled → texte
+          '&.Mui-disabled .MuiListItemText-primary': {
+            color: theme.palette.element.textDisabled,
+          },
+
+          // Disabled → icon
+          '&.Mui-disabled .MuiSvgIcon-root': {
+            color: theme.palette.element.iconDisabled,
+          },
+        }),
+      },
+    },
+
 
   },
 });

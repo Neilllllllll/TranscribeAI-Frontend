@@ -13,7 +13,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import logo from '../assets/images/logo-ch-vauclaire.svg';
-import { AppBar, Drawer, DrawerHeader } from '../styles/Home.styles'; 
+import { AppBar, Drawer, DrawerHeader } from '../styles/Home.styles';
+import Exporter from '../components/Exporter';
+
+
 
 import AudioRecorder from '../utils/AudioRecorder';
 
@@ -31,7 +34,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
+
+
 
 export default function Home() {
   const theme = useTheme();
@@ -157,9 +161,6 @@ export default function Home() {
             <ListItemText primary="Stop" />
           </ListItemButton>
         </ListItem>
-        <ListItem>
-            <Timer isRecording = {isRecording} isPause={isPause}/>
-        </ListItem>
       </List>
       { open ? <Divider>Retranscription</Divider> : <Divider/>}
       <List>
@@ -202,21 +203,13 @@ export default function Home() {
               <ListItemText primary="Télécharger l'audio" />
             </ListItemButton>
           </ListItem>
-          {/* Bouton exporter en DOCX */}
-          <ListItem disablePadding>
-            <ListItemButton disabled={true}>
-              <ListItemIcon>
-                <FileUploadIcon />
-              </ListItemIcon>
-              <ListItemText primary="Exporter" />
-            </ListItemButton>
-          </ListItem>
+          <Exporter></Exporter>
       </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {/* Créer un composant qui prend en props le fichier audio et affiche la transcription ? */}
-          {recordedURL && <Transcriber audioSource={recordedURL}/>}
+          {/* Créer un composant qui prend en props le fichier audio et affiche la transcription ? */}
+          { recordedURL ?  <Transcriber audioSource={recordedURL}/> : <Timer isRecording = {isRecording} isPause={isPause}/>}
       </Box>
     </Box>
   );

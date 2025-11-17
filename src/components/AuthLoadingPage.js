@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress, Typography, useTheme } from "@mui/material";
 
-const AuthLoadingPage = () => {
+export default function AuthLoadingPage () {
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -50,7 +50,7 @@ const AuthLoadingPage = () => {
       <Typography
         variant="body1"
         sx={{
-          ...theme.typography.p, // tu profites de ta variante "p" définie dans le thème
+          ...theme.typography.p,
           color: theme.palette.texte.secondaire,
           textAlign: "center",
           maxWidth: 400,
@@ -60,6 +60,4 @@ const AuthLoadingPage = () => {
       </Typography>
     </Box>
   );
-};
-
-export default AuthLoadingPage;
+}
