@@ -166,7 +166,7 @@ export default function Home() {
       <List>
           {/* Bouton Téléverser un fichier */}
           <ListItem disablePadding>
-            <ListItemButton disabled={true}>
+            <ListItemButton disabled={false}>
               <ListItemIcon>
                 <UploadFileIcon />
               </ListItemIcon>
@@ -175,7 +175,7 @@ export default function Home() {
           </ListItem>
           {/* Bouton programmer une retranscription */}
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled={true}>
               <ListItemIcon>
                 <CalendarMonthIcon />
               </ListItemIcon>
