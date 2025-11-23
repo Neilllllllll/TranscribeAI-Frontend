@@ -11,6 +11,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import NotesIcon from '@mui/icons-material/Notes';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { FileExporter } from "../utils/TexteExporter";
+import ListSubheader from '@mui/material/ListSubheader';
 
 export default function NestedList({texteToExport}) {
   
@@ -34,7 +35,12 @@ export default function NestedList({texteToExport}) {
   }
 
   return (
-    <List>
+    <List
+      subheader={
+        <ListSubheader component="div" id="nested-list-subheader">
+          Options d'exportation
+        </ListSubheader>}
+    >
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <IosShareIcon />

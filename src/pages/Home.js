@@ -24,8 +24,6 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import AudioFileIcon from '@mui/icons-material/AudioFile';
 import VoiceRecorder from '../components/VoiceRecorder';
 
 export default function Home() {
@@ -110,28 +108,8 @@ export default function Home() {
               </ListItemButton>
             </ListItem>
         </List>
-              { open ? <Divider>Exporter</Divider> : <Divider/>}
-        <List>
-            {/* Bouton copier le texte */}
-            <ListItem disablePadding>
-              <ListItemButton disabled={true}>
-                <ListItemIcon>
-                  <ContentCopyIcon />
-                </ListItemIcon>
-                <ListItemText primary="Copier le texte" />
-              </ListItemButton>
-            </ListItem>
-            {/* Bouton copier le texte */}
-            <ListItem disablePadding>
-              <ListItemButton disabled={true}>
-                <ListItemIcon>
-                  <AudioFileIcon />
-                </ListItemIcon>
-                <ListItemText primary="Télécharger l'audio" />
-              </ListItemButton>
-            </ListItem>
-            <Exporter texteToExport = {retranscriptionTexte}/>
-        </List>
+        <Divider/>
+        <Exporter texteToExport = {retranscriptionTexte}/>
       </Drawer>
       <Box sx={{ flexGrow: 1, p: 3 }}>
       <DrawerHeader />
