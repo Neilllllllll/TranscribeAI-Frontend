@@ -1,4 +1,5 @@
 /* Componente for recording audio from microphone, it return the recorded audio blob to the parent component */
+// Import react hooks
 import { useState, useRef, useEffect } from "react";
 // Import a class that allows to record
 import Recorder from '../utils/Recorder';
@@ -6,17 +7,15 @@ import Recorder from '../utils/Recorder';
 import PauseIcon from '@mui/icons-material/Pause';
 import StopIcon from '@mui/icons-material/Stop';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import TimerIcon from '@mui/icons-material/Timer';
-
 // Import components from material UI
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-
+import ListItemIcon from '@mui/material/ListItemIcon';
 import { useTheme } from '@mui/material/styles';
-
+// Import our component Timer
 import Timer from './Timer';
 
 export default function AudioRecorder({ onRecordEnd, setAlert }){

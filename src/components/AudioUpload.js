@@ -1,10 +1,12 @@
 /* Componente for uploading audio files, it return the selected file to the parent component */
-
+// Import react hooks
 import { useRef } from "react";
+// Import components from material UI
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
+// Import icon
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 export default function AudioUpload({onUploadEnd, setAlert}) {

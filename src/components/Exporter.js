@@ -1,16 +1,20 @@
 /* Componente for exporting text to different file formats */
+// Import react hooks
 import { useState } from 'react';
+// Import components from material UI
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
+// Import icons from material UI
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import ArticleIcon from '@mui/icons-material/Article';
 import NotesIcon from '@mui/icons-material/Notes';
 import IosShareIcon from '@mui/icons-material/IosShare';
+// Import our exporter utility
 import { FileExporter } from "../utils/TexteExporter";
 
 export default function Exporter({texteToExport, setAlert}) {

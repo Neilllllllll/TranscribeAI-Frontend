@@ -1,5 +1,5 @@
 /* Componente for playing audio from a blob */
-
+// Import react hooks
 import { useEffect, useState } from "react";
 
 export default function AudioPlayer({audioBlob}){

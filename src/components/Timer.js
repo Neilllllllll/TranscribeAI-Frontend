@@ -1,6 +1,7 @@
 /* Component that render a timer */
-
+// Import react hooks
 import { useState, useEffect } from "react";
+// Import components from material UI
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
