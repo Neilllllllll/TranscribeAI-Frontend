@@ -1,13 +1,8 @@
+/* Component that render a timer */
+
 import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
-/*
-Component that render a timer
-Props : 
-{isRecording} -> is true when the timer is increasing
-{isPause} -> is true when the timer is on pause
-*/
 
 const Timer = ({isRecording, isPause}) => {
   const [count, setCount] = useState(0);
@@ -23,6 +18,7 @@ const Timer = ({isRecording, isPause}) => {
     
   }, [count, isRecording, isPause]);
 
+  // Reset the timer when recording stops
   useEffect(() => {
      if (!isRecording) setCount(0);
   }, [isRecording]);

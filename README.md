@@ -96,10 +96,10 @@ Frontend-TranscribeAI/
 # Tâches
 - [x] Bouton : Reprendre, Enregistrer, stop et Pause
 - [x] Affichage d'un timer lors d'un enregistrement
-- [ ] Compléter l'affichage du timer avec du texte / autre feature
-- [ ] Bouton : Téleverser un fichier, télécharger l'audio, exporter
+- [x] Bouton : Téleverser un fichier, télécharger l'audio, exporter
+- [x] Zone de message pour : erreur, retranscription en cours, retranscription terminé
+- [ ] Faire le componente pour le texte et son affichage
 - [ ] Remplacer une chaine de caractère par une autre
-- [ ] Zone de message pour : erreur, retranscription en cours, retranscription terminé
 - [ ] Page historique des retranscriptions
 - [ ] Animation à mettre au début (intro)
 - [ ] Vérifier que le README est à jour, compréhensible et fonctionne

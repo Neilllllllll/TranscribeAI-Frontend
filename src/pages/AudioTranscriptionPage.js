@@ -1,39 +1,41 @@
-import { useTheme } from '@mui/material/styles';
+/* Main page for audio transcription */
 import { useState } from "react";
+// Import logo
+import logo from '../assets/images/logo-ch-vauclaire.svg';
+// Import additional components from material UI
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import logo from '../assets/images/logo-ch-vauclaire.svg';
+import { useTheme } from '@mui/material/styles';
+// Import styles
 import { AppBar, Drawer, DrawerHeader } from '../styles/Home.styles';
-import Exporter from '../components/Exporter';
-import ListSubheader from '@mui/material/ListSubheader';
-
-// Import des components dans le dossier src
+// Import our components
 import TranscriptionDisplay from '../components/TranscriptionDisplay';
 import AudioUpload from '../components/AudioUpload';
 import AudioPlayer from '../components/AudioPlayer';
 import AudioRecorder from '../components/AudioRecorder';
-// Import des Icons
-
+import Exporter from '../components/Exporter';
+// Import icons from material UI
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
-
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function AudioTranscriptionPage() {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [audio, setAudio] = useState(null);
-  const [error, setError] = useState(null);
+  const [{alert, alertType}, setAlert] = useState({alert: null, alertType: "error"});
   const [transcription, setTranscription] = useState("null");
 
   const handleRecordEnd = (blob, mimeType) => {
@@ -43,7 +45,7 @@ export default function AudioTranscriptionPage() {
       filename: "recorded-audio.webm"
     });
     setTranscription("");
-    setError(null);
+    setAlert({alert: null, alertType: "error"});
   };
 
   const handleUploadEnd = (file) => {
@@ -53,7 +55,7 @@ export default function AudioTranscriptionPage() {
       filename: file.name
     });
     setTranscription("");
-    setError(null);
+    setAlert({alert: null, alertType: "error"});
   };
 
   const handleDrawerOpen = () => {
@@ -114,13 +116,13 @@ export default function AudioTranscriptionPage() {
               {open ? "Dictée à temps réel" : " " }
           </ListSubheader>}
         >
-          <AudioRecorder onRecordEnd = {handleRecordEnd}/>
+          <AudioRecorder onRecordEnd = {handleRecordEnd} setAlert={setAlert}/>
         </List>
 
         <Divider/>
         <List>
             {/* Bouton Téléverser un fichier */}
-            <AudioUpload onUploadEnd = {handleUploadEnd} setError={setError} />
+            <AudioUpload onUploadEnd = {handleUploadEnd} setAlert={setAlert} />
             {/* Bouton programmer une retranscription */}
             <ListItem disablePadding>
               <ListItemButton disabled={true}>
@@ -138,7 +140,7 @@ export default function AudioTranscriptionPage() {
             {open ? "Options d'exportation" : " " }
           </ListSubheader>}
         >
-          <Exporter texteToExport = {transcription}/>
+          <Exporter texteToExport = {transcription} setAlert={setAlert}/>
         </List>
       </Drawer>
       <Box sx={{ flexGrow: 1, p: 3 }}>
@@ -152,8 +154,8 @@ export default function AudioTranscriptionPage() {
           gap : 2
         }}>
           <TranscriptionDisplay transcription = {transcription}/>
-          <Typography> {error} </Typography>
-          <AudioPlayer blob = {audio?.blob}/>
+          { alert && <Alert variant="outlined" severity={alertType}>{alert}</Alert> }
+          <AudioPlayer audioBlob = {audio?.blob}/>
         </Box>
       </Box>
     </Box>

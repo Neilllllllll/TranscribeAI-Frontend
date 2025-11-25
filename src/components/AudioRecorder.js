@@ -1,3 +1,4 @@
+/* Componente for recording audio from microphone, it return the recorded audio blob to the parent component */
 import { useState, useRef, useEffect } from "react";
 // Import a class that allows to record
 import Recorder from '../utils/Recorder';
@@ -18,7 +19,7 @@ import { useTheme } from '@mui/material/styles';
 
 import Timer from './Timer';
 
-export default function AudioRecorder({ onRecordEnd }){
+export default function AudioRecorder({ onRecordEnd, setAlert }){
     const theme = useTheme();
     const [isRecording, setIsRecording] = useState(false);
     const [isPause, setIsPause] = useState(false);
@@ -35,6 +36,7 @@ export default function AudioRecorder({ onRecordEnd }){
     const handlerStartRecording = () => {
         setIsRecording(true);
         audioRecorderRef.current?.start();
+        setAlert({alert: "L'enregistrement a commencé.", alertType: "info"});
     };
 
     // pause recording
@@ -42,9 +44,11 @@ export default function AudioRecorder({ onRecordEnd }){
         setIsPause(!isPause);
         if(isPause){
         audioRecorderRef.current?.resume();
+        setAlert({alert: "L'enregistrement a repris.", alertType: "info"});
         return;
         }
         audioRecorderRef.current?.pause();
+        setAlert({alert: "L'enregistrement est en pause.", alertType: "info"});
     }
 
     // stop recording and return blob to parent component
@@ -53,8 +57,9 @@ export default function AudioRecorder({ onRecordEnd }){
         setIsPause(false);
         const blob = await audioRecorderRef.current?.stop();
         if (!blob) {
-        onRecordEnd(null);
-        return;
+            onRecordEnd(null);
+            setAlert({alert: "Une erreur est survenue lors de l'enregistrement audio.", alertType: "error"});
+            return;
         }
         onRecordEnd(blob.audioBlob, "audio/webm");
     }

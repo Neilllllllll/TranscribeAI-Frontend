@@ -1,3 +1,4 @@
+/* Componente for exporting text to different file formats */
 import { useState } from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -12,8 +13,7 @@ import NotesIcon from '@mui/icons-material/Notes';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { FileExporter } from "../utils/TexteExporter";
 
-
-export default function NestedList({texteToExport}) {
+export default function Exporter({texteToExport, setAlert}) {
   
   const exporter = new FileExporter();
 
@@ -22,16 +22,22 @@ export default function NestedList({texteToExport}) {
     setOpen(!open);
   };
 
-  const exportToDocx  = async () => {
+  const handlerExportToDocx  = async () => {
+    setAlert({alert: "Exportation vers DOCX en cours...", alertType: "info"});
     await exporter.exportDocx("mon_document", texteToExport);
+    setAlert({alert: "Exportation vers DOCX terminée.", alertType: "success"});
   }
 
-  const exportToPdf  = () => {
+  const handlerExportToPdf  = () => {
+    setAlert({alert: "Exportation vers PDF en cours...", alertType: "info"});
     exporter.exportPdf("mon_document", texteToExport);
+    setAlert({alert: "Exportation vers PDF terminée.", alertType: "success"});
   }
 
-  const exportToTxt  = async () => {
+  const handlerExportToTxt  = async () => {
+    setAlert({alert: "Exportation vers TXT en cours...", alertType: "info"});
     exporter.exportTxt("mon_document", texteToExport);
+    setAlert({alert: "Exportation vers TXT terminée.", alertType: "success"});
   }
 
   return (
@@ -45,19 +51,19 @@ export default function NestedList({texteToExport}) {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }} onClick={exportToDocx}>
+          <ListItemButton sx={{ pl: 4 }} onClick={handlerExportToDocx}>
             <ListItemIcon>
               <ArticleIcon />
             </ListItemIcon>
             <ListItemText primary="DOCX" />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}  onClick={exportToPdf}>
+          <ListItemButton sx={{ pl: 4 }}  onClick={handlerExportToPdf}>
             <ListItemIcon>
               <PictureAsPdfIcon />
             </ListItemIcon>
             <ListItemText primary="PDF" />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}  onClick={exportToTxt}>
+          <ListItemButton sx={{ pl: 4 }}  onClick={handlerExportToTxt}>
             <ListItemIcon>
               <NotesIcon />
             </ListItemIcon>

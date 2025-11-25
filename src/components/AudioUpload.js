@@ -1,23 +1,19 @@
-// AudioUpload.js
-// Componente for uploading audio files, it return the selected file to the parent component
-import { useState, useRef } from "react";
+/* Componente for uploading audio files, it return the selected file to the parent component */
+
+import { useRef } from "react";
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
-export default function AudioUpload({onUploadEnd, setError}) {
+export default function AudioUpload({onUploadEnd, setAlert}) {
 
     const MAXSIZEBYTES = 10 * 1024 * 1024;
     const inputRef = useRef(null);
 
     const handleClick = () => {
-        if (inputRef.current) {
-        inputRef.current.click();
-        } else {
-        console.error("Référence introuvable");
-        }
+        inputRef.current?.click();
     };
 
     const handleFileChange = (event) => {
@@ -28,17 +24,17 @@ export default function AudioUpload({onUploadEnd, setError}) {
         }
 
         // Check basic MIME type (frontend side, just for UX)
-        if (!selectedFile.type.startsWith("audio/") && selectedFile.type !== "video/mp4") {
-            setError("Le fichier sélectionné n'est pas un fichier audio ou vidéo MP4.");
+        if (!selectedFile.type.startsWith("audio/")) {
+            setAlert({alert: "Le fichier sélectionné n'est pas un fichier audio ou vidéo MP4.", alertType: "error"});
             return;
         }
 
         // Example: size limit to 10 MB
         if (selectedFile.size > MAXSIZEBYTES) {
-            setError("Le fichier audio dépasse la taille maximale autorisée (10 Mo).");
+            setAlert({alert: "Le fichier audio dépasse la taille maximale autorisée (10 Mo).", alertType: "error"});
             return;
         }
-        setError(null);
+        setAlert({alert: null, alertType: "info"});
         onUploadEnd(selectedFile);
     };
 
@@ -46,7 +42,7 @@ export default function AudioUpload({onUploadEnd, setError}) {
     <>
         <input
             type="file"
-            accept="audio/*,video/mp4"
+            accept="audio/*"
             hidden
             ref = {inputRef}
             onChange={handleFileChange}
