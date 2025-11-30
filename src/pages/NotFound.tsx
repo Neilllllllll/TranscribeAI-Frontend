@@ -24,7 +24,7 @@ const NotFound = () => {
         Vérifiez l'URL ou revenez à l'accueil.
       </Typography>
       
-      <Button onClick={() => navigate('/')}>
+      <Button onClick={() => navigate('/')} variant="contained">
         Retour à l'accueil
       </Button>
     </Box>

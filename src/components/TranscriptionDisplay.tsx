@@ -1,17 +1,9 @@
 /* Component that display the transcribed text */
 /* 
 A faire : 
-Faire une div scrollable dans laquelle la transcription sera affiché
-
-Faire une affichage conditionnel du CircularProgressWithLabel en fonction de l'état de la retranscription
-
-On fait l'appel API dans le parent et on passe le texte en props
-
-Faire un affichage animer du texte qui s'affiche au fur et à mesure de la retranscription (genre un effet machine à écrire)
+Lorsque la transcription est en cours, afficher le texte qui arrive au fur et à mesure + animation avec le pourcentage de la transcription / barre de progression ?
 
 Mettre un effet de scroll automatique vers le bas quand le texte s'allonge
-
-Mettre un bouton pour copier le texte dans le presse papier
 
 Pouvoir changer une chaine de caractère dans le texte et cela pour tout le texte (genre corriger une faute de retranscription)
 
@@ -24,7 +16,6 @@ Gérer le cas où y'a pas de texte retranscrit (genre afficher un message "Rien 
 Se renseigner pour défiinr une key pour chaque token
 
 */
-
 import CopyButton from './CopyButton.tsx';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';

@@ -147,9 +147,7 @@ export default function AudioTranscriptionPage() {
 
         <Divider/>
         <List>
-            {/* Bouton Téléverser un fichier */}
             <AudioUpload onUploadEnd = {handleAudioSetter} setAlert={setAlert} />
-            {/* Bouton programmer une retranscription */}
             <ListItem disablePadding>
               <ListItemButton disabled={true}>
                 <ListItemIcon>

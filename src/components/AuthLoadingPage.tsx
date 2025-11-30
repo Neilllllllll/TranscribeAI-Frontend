@@ -27,8 +27,8 @@ export default function AuthLoadingPage () {
         alignItems: "center",
         justifyContent: "center",
         gap: theme.spacing(2),
-        bgcolor: theme.palette.background.principale,
-        color: theme.palette.texte.principal,
+        bgcolor: "background.primary",
+        color: "texte.primary",
         px: theme.spacing(3),
       }}
     >
@@ -36,7 +36,7 @@ export default function AuthLoadingPage () {
         size={60}
         thickness={4}
         sx={{
-          color: theme.palette.element.button,
+          color: " #00B37E",
         }}
       />
 
@@ -54,7 +54,7 @@ export default function AuthLoadingPage () {
         variant="body1"
         sx={{
           ...theme.typography.p,
-          color: theme.palette.texte.secondaire,
+          color: "texte.secondary",
           textAlign: "center",
           maxWidth: 400,
         }}

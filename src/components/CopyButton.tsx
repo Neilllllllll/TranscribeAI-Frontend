@@ -1,3 +1,5 @@
+/* Component CopyButton.tsx: Button to copy text to clipboard */
+
 import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -43,12 +45,6 @@ export default function CopyButton({textToCopy, duration = 1500, size = 'small'}
         open={copied}
         message="Texte copié dans le presse-papier"
         autoHideDuration={duration}
-        sx={{
-        '& .MuiSnackbarContent-root': {
-            backgroundColor: '#00B37E', // couleur de fond
-            color: '#fff',               // couleur du texte
-        },
-        }}
       />
     </>
   );

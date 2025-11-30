@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from './reportWebVitals.js';
 
 // Import des pages
 import NotFound from './pages/NotFound.tsx';
-import App from './App';
+import App from './App.tsx';
 import AudioTranscriptionPage from './pages/AudioTranscriptionPage.tsx';
 
 // MUI Imports pour le thème
 import { CssBaseline } from '@mui/material';
-import theme from './Theme.tsx';
+import DarkTheme from './DarkTheme.js';
 import { ThemeProvider } from '@mui/material';
 
 // Configuration du routeur
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={DarkTheme}>
       <CssBaseline /> {/* Réinitialise les styles pour cohérence */}
       <RouterProvider router={router}/>
     </ThemeProvider>

@@ -20,11 +20,11 @@ import { AlertState } from "../types/alert.types.ts";
 import { TranscriptionText } from "../types/transcriptionText.types.ts";
 
 interface ExporterProps {
-  TranscriptionText: TranscriptionText;
-  setAlert: React.Dispatch<React.SetStateAction<AlertState>>;
+  transcriptionText: TranscriptionText;
+  setAlert: (alert: AlertState) => void;
 }
 
-export default function Exporter({TranscriptionText, setAlert}: ExporterProps) {
+export default function Exporter({transcriptionText, setAlert}: ExporterProps) {
   
   const exporter = new FileExporter();
   const [open, setOpen] = useState<boolean>(false);

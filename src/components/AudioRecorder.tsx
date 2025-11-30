@@ -1,4 +1,4 @@
-/* Componente for recording audio from microphone, it return the recorded audio blob to the parent component */
+/* Componente for recording audio from microphone, it set the parent audio by calling onRecordEnd callback */
 // Import react hooks
 import { useState, useRef, useEffect } from "react";
 // Import a class that allows to record
@@ -21,8 +21,8 @@ import { AlertState } from "../types/alert.types.ts";
 import { Audio } from "../types/audio.types.ts";
 
 interface AudioRecorderProps {
-  onRecordEnd: (audio: Audio) => void;
-  setAlert: React.Dispatch<React.SetStateAction<AlertState>>
+    onRecordEnd: (audio: Audio) => void;
+    setAlert: (alert: AlertState) => void;
 }
 
 export default function AudioRecorder({ onRecordEnd, setAlert } : AudioRecorderProps){

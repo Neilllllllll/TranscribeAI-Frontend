@@ -13,7 +13,7 @@ import { Audio } from "../types/audio.types.ts";
 
 interface AudioUploadProps {
   onUploadEnd: (audio: Audio) => void;
-  setAlert: React.Dispatch<React.SetStateAction<AlertState>>;
+  setAlert: (alert: AlertState) => void;
 }
 
 export default function AudioUpload({onUploadEnd, setAlert}: AudioUploadProps) {
