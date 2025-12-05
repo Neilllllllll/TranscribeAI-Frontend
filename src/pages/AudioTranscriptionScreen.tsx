@@ -34,15 +34,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 // import types
 import { AlertState } from "../types/alert.types.ts";
 import { Audio } from "../types/audio.types.ts";
+import { TranscriptionText } from "../types/transcriptionText.types.ts";
+// Import API function
+import { fetchTranscription } from "../api/fetchTranscription.tsx";
 
-export default function AudioTranscriptionPage() {
-
-  const BASE_URL = "https://jsonplaceholder.typicode.com/comments";
+export default function AudioTranscriptionScreen() {
   const theme = useTheme();
   const [open, setOpen] = useState<boolean>(true);
   const [audio, setAudio] = useState< Audio | null>(null);
   const [{alert, alertType}, setAlert] = useState<AlertState>({alert: "", alertType: "info"});
-  const [transcription, setTranscription] = useState<{body: string}[] | null>(null);
+  const [transcription, setTranscription] = useState<TranscriptionText | null>(null);
   const abortController = useRef<AbortController | null>(null);
 
   // Function to handle audio setting from child components
@@ -58,30 +59,28 @@ export default function AudioTranscriptionPage() {
 
   // Call the transcription API when audio state change
   useEffect(() => {
-    if(!audio){
-      return;
-    }
-    // Peut etre mettre cela dans un fichier api.js
-    const callTranscriptionAPI = async () => {
-      abortController.current?.abort();
-      abortController.current = new AbortController();
-      setAlert({alert: "La transcription est en cours", alertType: "info"});
-      try{
-        const response = await fetch(BASE_URL, { signal : abortController.current?.signal });
-        const transcription = (await response.json());
-        setTranscription(transcription);
-      }
-      catch(error : any){
-        if(error.name === "AbortError"){
-          console.log("aborted");
+    if (!audio) return;
+
+    // annule toute requête en cours
+    abortController.current?.abort();
+    abortController.current = new AbortController();
+
+    setAlert({ alert: "La transcription est en cours", alertType: "info" });
+
+    (async () => {
+      try {
+        const data = await fetchTranscription(abortController.current!.signal);
+        setTranscription(data);
+        setAlert({ alert: "La transcription est terminée", alertType: "success" });
+      } catch (err: any) {
+        if (err?.name === "AbortError") {
+          // requête annulée volontairement
+          console.debug("transcription aborted");
           return;
         }
-        setAlert({alert: "Quelque chose c'est mal passé lors de la transcription.", alertType: "error"});
-        return;
+        setAlert({ alert: "Quelque chose s'est mal passé lors de la transcription.", alertType: "error" });
       }
-      setAlert({alert: "La transcription est terminé", alertType: "success"});
-    }
-    callTranscriptionAPI();
+    })();
   }, [audio]);
 
   const handleDrawerOpen = () => {
