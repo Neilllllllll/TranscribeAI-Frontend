@@ -17,10 +17,9 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 // Import our exporter utility
 import { FileExporter } from "../utils/TexteExporter";
 import { AlertState } from "../types/alert.types.ts";
-import { TranscriptionText } from "../types/transcriptionText.types.ts";
 
 interface ExporterProps {
-  transcriptionText: TranscriptionText;
+  transcriptionText: string;
   setAlert: (alert: AlertState) => void;
 }
 
@@ -34,19 +33,19 @@ export default function Exporter({transcriptionText, setAlert}: ExporterProps) {
 
   const handlerExportToDocx  = async () => {
     setAlert({alert: "Exportation vers DOCX en cours...", alertType: "info"});
-    await exporter.exportDocx("mon_document", texteToExport);
+    await exporter.exportDocx("mon_document", transcriptionText);
     setAlert({alert: "Exportation vers DOCX terminée.", alertType: "success"});
   }
 
   const handlerExportToPdf  = () => {
     setAlert({alert: "Exportation vers PDF en cours...", alertType: "info"});
-    exporter.exportPdf("mon_document", texteToExport);
+    exporter.exportPdf("mon_document", transcriptionText);
     setAlert({alert: "Exportation vers PDF terminée.", alertType: "success"});
   }
 
   const handlerExportToTxt  = async () => {
     setAlert({alert: "Exportation vers TXT en cours...", alertType: "info"});
-    exporter.exportTxt("mon_document", texteToExport);
+    exporter.exportTxt("mon_document", transcriptionText);
     setAlert({alert: "Exportation vers TXT terminée.", alertType: "success"});
   }
 

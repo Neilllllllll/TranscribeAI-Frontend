@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress, Typography, useTheme } from "@mui/material";
 
@@ -53,9 +53,6 @@ export default function AuthLoadingPage () {
       <Typography
         variant="body1"
         sx={{
-          ...theme.typography.p,
-          color: "texte.secondary",
-          textAlign: "center",
           maxWidth: 400,
         }}
       >

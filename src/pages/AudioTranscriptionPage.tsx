@@ -61,7 +61,7 @@ export default function AudioTranscriptionPage() {
     if(!audio){
       return;
     }
-    // Peut etre mettre cela dnas un fichier api.js
+    // Peut etre mettre cela dans un fichier api.js
     const callTranscriptionAPI = async () => {
       abortController.current?.abort();
       abortController.current = new AbortController();
@@ -164,7 +164,6 @@ export default function AudioTranscriptionPage() {
             {open ? "Options d'exportation" : " " }
           </ListSubheader>}
         >
-          <Exporter texteToExport = {transcription} setAlert={setAlert}/>
         </List>
       </Drawer>
       <Box sx={{ flexGrow: 1, p: 3 }}>
