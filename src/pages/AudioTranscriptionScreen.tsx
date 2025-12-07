@@ -32,9 +32,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MenuIcon from '@mui/icons-material/Menu';
 // import types
-import { AlertState } from "../types/alert.types.ts";
-import { Audio } from "../types/audio.types.ts";
-import { TranscriptionText } from "../types/transcriptionText.types.ts";
+import type { AlertState } from "../types/alert.types.ts";
+import type { Audio } from "../types/audio.types.ts";
 // Import API function
 import { fetchTranscription } from "../api/fetchTranscription.tsx";
 
@@ -43,7 +42,7 @@ export default function AudioTranscriptionScreen() {
   const [open, setOpen] = useState<boolean>(true);
   const [audio, setAudio] = useState< Audio | null>(null);
   const [{alert, alertType}, setAlert] = useState<AlertState>({alert: "", alertType: "info"});
-  const [transcription, setTranscription] = useState<TranscriptionText | null>(null);
+  const [transcription, setTranscription] = useState<string | null>(null);
   const abortController = useRef<AbortController | null>(null);
 
   // Function to handle audio setting from child components
@@ -163,6 +162,7 @@ export default function AudioTranscriptionScreen() {
             {open ? "Options d'exportation" : " " }
           </ListSubheader>}
         >
+          <Exporter textToExport={transcription ? transcription : null} setAlert={setAlert}/>
         </List>
       </Drawer>
       <Box sx={{ flexGrow: 1, p: 3 }}>
@@ -174,7 +174,7 @@ export default function AudioTranscriptionScreen() {
           alignItems : 'center',
           gap : 2
         }}>
-          <TranscriptionDisplay transcription = {transcription}/>
+          <TranscriptionDisplay textToDisplay = {transcription ? transcription : null} setAlert={setAlert}/>
           { alert && <Alert variant="outlined" severity={alertType}>{alert}</Alert> }
           <AudioPlayer audio = {audio}/>
         </Box>

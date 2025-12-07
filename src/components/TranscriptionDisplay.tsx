@@ -19,19 +19,16 @@ Se renseigner pour défiinr une key pour chaque token
 import CopyButton from './CopyButton.tsx';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
+import { AlertState } from '../types/alert.types.ts';
 
-interface TranscriptionDisplayProps {
-  transcription: {body: string}[] | null;
-}
+type ChildProps = {
+  textToDisplay: string | null; 
+  setAlert: (alert: AlertState) => void;
+};
 
-export default function TranscriptionDisplay({transcription}: TranscriptionDisplayProps) {
-    const [transcriptionText, setTranscriptionText] = useState<string>("");
+export default function TranscriptionDisplay({ textToDisplay, setAlert }: ChildProps) {
 
-    useEffect(() => {
-        setTranscriptionText(transcription ? transcription.map((token) => token.body).join(" ") : "");
-    }, [transcription]);
     return(
         <>
             <Paper
@@ -75,11 +72,11 @@ export default function TranscriptionDisplay({transcription}: TranscriptionDispl
                         zIndex: 9999,
                     }}
                     >
-                        <CopyButton textToCopy={transcriptionText} />
+                        <CopyButton textToCopy={textToDisplay ?? null} setAlert={setAlert}/>
                     </Box>
 
                     <Typography>
-                        {transcriptionText}
+                        {textToDisplay}
                     </Typography>
                 </Box>
             </Paper>

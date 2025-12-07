@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { Audio } from "../types/audio.types.ts";
 
 export default function AudioPlayer({ audio }: { audio: Audio | null }) {
-    const [url, setUrl] = useState<string>("");
+    const [url, setUrl] = useState<string | null>(null);
 
     useEffect(() => {
         if (!audio?.blob) {
-            setUrl("");
+            setUrl(null);
             return;
         }
         const objectUrl = URL.createObjectURL(audio.blob);
@@ -20,6 +20,6 @@ export default function AudioPlayer({ audio }: { audio: Audio | null }) {
         };
     }, [audio?.blob]);
     return(
-        <audio style={{ width: '80%' }} controls src = {url}></audio>
+        <audio style={{ width: '80%' }} controls src={url ?? undefined}></audio>
     );
 }

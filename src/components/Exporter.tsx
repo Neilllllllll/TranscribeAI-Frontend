@@ -15,15 +15,15 @@ import ArticleIcon from '@mui/icons-material/Article';
 import NotesIcon from '@mui/icons-material/Notes';
 import IosShareIcon from '@mui/icons-material/IosShare';
 // Import our exporter utility
-import { FileExporter } from "../utils/TexteExporter";
+import { FileExporter } from "../utils/TexteExporter.tsx";
 import { AlertState } from "../types/alert.types.ts";
 
 interface ExporterProps {
-  transcriptionText: string;
+  textToExport: string | null;
   setAlert: (alert: AlertState) => void;
 }
 
-export default function Exporter({transcriptionText, setAlert}: ExporterProps) {
+export default function Exporter({textToExport, setAlert}: ExporterProps) {
   
   const exporter = new FileExporter();
   const [open, setOpen] = useState<boolean>(false);
@@ -31,27 +31,38 @@ export default function Exporter({transcriptionText, setAlert}: ExporterProps) {
     setOpen(!open);
   };
 
+  const checkTextToExport = () => {
+    if(textToExport === null || textToExport === "") {
+      setAlert({alert: "Impossible d'exporter un texte vide.", alertType: "error"});
+      return false;
+    }
+    return true;
+  }
+
   const handlerExportToDocx  = async () => {
+    if(!checkTextToExport()) return;
     setAlert({alert: "Exportation vers DOCX en cours...", alertType: "info"});
-    await exporter.exportDocx("mon_document", transcriptionText);
+    await exporter.exportDocx("mon_document", textToExport ?? null);
     setAlert({alert: "Exportation vers DOCX terminée.", alertType: "success"});
   }
 
   const handlerExportToPdf  = () => {
+    if(!checkTextToExport()) return;
     setAlert({alert: "Exportation vers PDF en cours...", alertType: "info"});
-    exporter.exportPdf("mon_document", transcriptionText);
+    exporter.exportPdf("mon_document", textToExport ?? null);
     setAlert({alert: "Exportation vers PDF terminée.", alertType: "success"});
   }
 
   const handlerExportToTxt  = async () => {
+    if(!checkTextToExport()) return;
     setAlert({alert: "Exportation vers TXT en cours...", alertType: "info"});
-    exporter.exportTxt("mon_document", transcriptionText);
+    exporter.exportTxt("mon_document", textToExport ?? null);
     setAlert({alert: "Exportation vers TXT terminée.", alertType: "success"});
   }
 
   return (
     <>
-      <ListItemButton onClick={handleClick} disabled = {true}>
+      <ListItemButton onClick={handleClick} disabled={textToExport === null || textToExport === "" || false}>
         <ListItemIcon>
           <IosShareIcon />
         </ListItemIcon>
