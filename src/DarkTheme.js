@@ -8,6 +8,7 @@ const darkTheme = createTheme({
     background: {
       primary: '#0D0D0D',
       secondary: '#3F3F45',
+      default: '#272727',
     },
 
     texte: {

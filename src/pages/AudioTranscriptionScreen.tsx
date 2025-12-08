@@ -174,7 +174,7 @@ export default function AudioTranscriptionScreen() {
           alignItems : 'center',
           gap : 2
         }}>
-          <TranscriptionDisplay textToDisplay = {transcription ? transcription : null} setAlert={setAlert}/>
+          <TranscriptionDisplay textToDisplay = {transcription ? transcription : null} onTextChange={setTranscription}  setAlert={setAlert}/>
           { alert && <Alert variant="outlined" severity={alertType}>{alert}</Alert> }
           <AudioPlayer audio = {audio}/>
         </Box>
