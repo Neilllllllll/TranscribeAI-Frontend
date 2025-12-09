@@ -57,41 +57,17 @@ Votre application est prête à être déployée !
 
 Consultez la section sur le [déploiement]() pour plus d’informations.
 
-## Structure du projet (l'essentiel)
-
-Frontend-TranscribeAI/
-├── src/
-│   ├── components/
-│   │   |── Timer/
-│   │   |   ├── Timer.js
-│   │   |   └── Timer.styles.js
-│   │   └── Transcriber/
-│   │       ├── Transcriber.js
-│   │       └── Transcriber.styles.js
-│   ├── pages/
-│   │   |── NotFound
-│   │   └── Home
-│   ├── utils/
-│   │   └── format.js
-│   ├── App.js
-│   ├── Theme.js
-│   └── index.css
-│
-├── .env
-├── package.json
-└── README.md
-
-### Description des dossiers
+### Description des dossiers essentiels
 
 | Dossier / Fichier | Rôle                                                  |
 | ----------------- | ----------------------------------------------------- |
-| `public/`         | Contient le HTML et le favicon                        |
 | `src/`            | Code source du projet React.                          |
 | `src/components/` | Composants réutilisables.                             |
 | `src/pages/`      | Pages principales                                     |
 | `src/utils/`      | Class utilitaires génériques.                         |
 | `App.js`          | Page par défaut                                       |
 | `.env`            | Variables d’environnement.                            |
+| `api`            | Call api|
 
 # Tâches
 - [x] Bouton : Reprendre, Enregistrer, stop et Pause
