@@ -36,7 +36,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import type { AlertState } from "../types/alert.types.ts";
 import type { Audio } from "../types/audio.types.ts";
 // Import API function
-import { fetchTranscription } from "../api/fetchTranscription.tsx";
+import { postAudio } from "../api/fetchTranscription.tsx";
 
 export default function AudioTranscriptionScreen() {
   const theme = useTheme();
@@ -63,7 +63,7 @@ export default function AudioTranscriptionScreen() {
   useEffect(() => {
     if (!audio) return;
 
-    // annule toute requête en cours
+    // annule toute requête en cours évite qu'on dupplique les requetes
     abortController.current?.abort();
     abortController.current = new AbortController();
 
@@ -73,7 +73,8 @@ export default function AudioTranscriptionScreen() {
 
     (async () => {
       try {
-        const data = await fetchTranscription(abortController.current!.signal);
+        const data = await postAudio(audio, abortController.current!.signal);
+        console.log("data ", data);
         setTranscription(data);
         setAlert({ alert: "La transcription est terminée", alertType: "success" });
       } catch (err: any) {

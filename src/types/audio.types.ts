@@ -1,5 +1,5 @@
 export type Audio = {
-      blob: Blob | File | null,
+      blob: Blob,
       mimeType: string,
       filename: string
 };
