@@ -1,4 +1,4 @@
-# Front-end Transcribe AI avec Create React App
+# 📚 Documentation frontend et conventions 
 
 Ce projet a été initialisé avec [Create React App](https://github.com/facebook/create-react-app).
 
@@ -30,34 +30,7 @@ Ce projet a été initialisé avec [Create React App](https://github.com/faceboo
 
 Le projet est maintenant installé et prêt à être lancé sur votre machine.
 
-## Scripts disponibles
-
-Dans le répertoire du projet, vous pouvez exécuter :
-
-### `npm start`
-
-Lance l’application en mode développement.  
-Ouvrez [http://localhost:3000](http://localhost:3000) pour l’afficher dans votre navigateur.
-
-La page se rechargera automatiquement lorsque vous effectuerez des modifications.  
-Vous pouvez également voir des erreurs de lint dans la console.
-
-### `npm test`
-
-Lance le test runner en mode surveillance interactive.  
-Consultez la section sur [l’exécution des tests](https://facebook.github.io/create-react-app/docs/running-tests) pour plus d’informations.
-
-### `npm run build`
-
-Construit l’application pour la production dans le dossier `build`.  
-Le bundling de React est correctement optimisé pour la production et la build est préparée pour offrir les meilleures performances.
-
-Les fichiers générés sont minifiés et leurs noms incluent des hash.  
-Votre application est prête à être déployée !
-
-Consultez la section sur le [déploiement]() pour plus d’informations.
-
-### Description des dossiers essentiels
+## Description des dossiers essentiels
 
 | Dossier / Fichier | Rôle                                                  |
 | ----------------- | ----------------------------------------------------- |
@@ -70,13 +43,7 @@ Consultez la section sur le [déploiement]() pour plus d’informations.
 | `types`            | Définis les types utilisés dans plusieurs fichiers|
 | `styles`            | style des pages |
 
-# Tâches
-- [x] Bouton : Reprendre, Enregistrer, stop et Pause
-- [x] Affichage d'un timer lors d'un enregistrement
-- [x] Bouton : Téleverser un fichier, télécharger l'audio, exporter
-- [x] Zone de message pour : erreur, retranscription en cours, retranscription terminé
-- [x] Faire le componente pour le texte et son affichage
-- [ ] Remplacer une chaine de caractère par une autre
+## Convetion de nommage
 
 
 

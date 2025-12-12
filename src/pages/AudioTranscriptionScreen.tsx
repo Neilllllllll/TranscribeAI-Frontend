@@ -36,7 +36,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import type { AlertState } from "../types/alert.types.ts";
 import type { Audio } from "../types/audio.types.ts";
 // Import API function
-import { postAudio } from "../api/fetchTranscription.tsx";
+import { postAudio,getTranscription } from "../api/batchMode.tsx";
 
 export default function AudioTranscriptionScreen() {
   const theme = useTheme();
@@ -47,6 +47,8 @@ export default function AudioTranscriptionScreen() {
   const [transcriptionProgress, setTranscriptionProgress] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const abortController = useRef<AbortController | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
+
 
   // Function to handle audio setting from child components
   const handleAudioSetter = (audio: Audio) => {
@@ -59,34 +61,72 @@ export default function AudioTranscriptionScreen() {
     setAlert({alert: null, alertType: "error"});
   };
 
-  // Call the transcription API when audio state change
   useEffect(() => {
     if (!audio) return;
 
-    // Annule toute requête en cours évite qu'on dupplique les requetes
+    // Annuler précédent
     abortController.current?.abort();
     abortController.current = new AbortController();
 
-    setAlert({ alert: "La transcription est en cours", alertType: "info" });
-    setIsLoading(true);
-    setTranscriptionProgress(0);
+    // fermer ancienne websocket
+    wsRef.current?.close();
+    wsRef.current = null;
 
-    (async () => {
+    let currentJobId: string = "";
+
+    const run = async () => {
       try {
-        console.log("On attend le retour de la requete ");
-        const data = await postAudio(audio, abortController.current!.signal);
-        console.log("La requete est arrivé ");
-        setTranscription(data);
-        setAlert({ alert: "La transcription est terminée", alertType: "success" });
+        // 1) POST -> { ws, job_id }
+        const { ws, job_id } = await postAudio(audio, abortController.current?.signal);
+        wsRef.current = ws;
+        currentJobId = job_id;
+
+        console.log("Job ID :", currentJobId);
+        setIsLoading(true);
+
+        // 2) WebSocket events
+        ws.onmessage = async (event) => {
+          try {
+            const msg = JSON.parse(event.data);
+
+            if (msg.event === "done" && msg.job_id === currentJobId) {
+              console.log("Notification reçue : transcription prête");
+
+              // 3) GET /transcription/result/:job_id
+              setTranscription(await getTranscription(currentJobId));
+              setAlert({ alert: "La transcription est terminée", alertType: "success" });
+              setIsLoading(false);
+            }
+
+          } catch {
+            setAlert({ alert: "Nous n'arrivons pas à récupérer la transcription", alertType: "error" });
+          }
+        };
+
+        ws.onclose = async () => {
+          console.log("WebSocket fermée");
+        };
+
+        ws.onerror = (err) => {
+          console.error("WebSocket error :", err);
+        };
+
       } catch (err: any) {
-        if (err?.name === "AbortError") {
-          // requête annulée volontairement
-          console.debug("transcription aborted");
+        if (err.name === "AbortError") {
+          console.debug("Transcription annulée");
           return;
         }
-        setAlert({ alert: "Quelque chose s'est mal passé lors de la transcription.", alertType: "error" });
+        setAlert({alert: "Erreur lors de la transcription.", alertType: "error"});
       }
-    })();
+    };
+
+    run();
+
+    return () => {
+      abortController.current?.abort();
+      wsRef.current?.close();
+    };
+
   }, [audio]);
 
   const handleDrawerOpen = () => {
