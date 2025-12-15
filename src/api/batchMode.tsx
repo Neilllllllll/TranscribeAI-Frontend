@@ -1,16 +1,11 @@
 import type { Audio } from "../types/audio.types.ts";
 import {API_BASE_URL, API_KEY} from "../config.ts"
 
-type PostAudioResult = {
-  ws: WebSocket;
-  job_id: string;
-};
-
-// Envoie une requete POST et return une connection web socket + un identifiant
-export async function postAudio(
+// Envoie une requete POST et return un identifiant
+export async function createJob(
   audio: Audio,
   signal?: AbortSignal
-): Promise<PostAudioResult> {
+): Promise<string> {
 
   // Vérifie si des données sont manquantes
   if (!API_BASE_URL) throw new Error("BASE_URL transcription non configurée");
@@ -24,7 +19,7 @@ export async function postAudio(
   formData.append("audioFile", audioFile);
 
   // Envoie de la requete
-  const response = await fetch(`${API_BASE_URL}/batchTranscription/connexion`, {
+  const response = await fetch(`${API_BASE_URL}/api/batchTranscription/createJob`, {
     method: "POST",
     headers: headers,
     body: formData,
@@ -36,26 +31,22 @@ export async function postAudio(
   }
 
   const payload = await response.json();
-  const token = payload.data.token;
-  const job_id = payload.data.job_id;
-
-  // Créer une connection websocket
-  const wsUrl = API_BASE_URL.replace(/^http/, "ws") + `/?token=${token}`;
-  const ws = new WebSocket(wsUrl);
-  return { ws, job_id };
+  const job_uuid = payload.data.job_uuid;
+  
+  return job_uuid;
 }
 
 // Envoie une requete GET pour récupérer la transcription
-export async function getTranscription(
-  job_id: string
-): Promise<string | null> {
+export async function getTranscriptionByUuid(
+  job_uuid: string
+): Promise<string> {
 
   // Vérifie les données manquantes
   if (!API_BASE_URL) throw new Error("BASE_URL transcription non configurée");
-  if (!job_id) throw new Error("Aucun fichier audio fourni.");
+  if (!job_uuid) throw new Error("Aucun uuid fournit.");
   if (!API_KEY) throw new Error("Aucune API key fournie.");
 
-  const response = await fetch(`${API_BASE_URL}/batchTranscription/delete/${job_id}`, {
+  const response = await fetch(`${API_BASE_URL}/api/batchTranscription/result?job_uuid=${job_uuid}`, {
     headers: { "X-API-KEY": API_KEY }
   });
 
@@ -78,7 +69,7 @@ export async function deleteTranscription(
   if (!job_id) throw new Error("Aucun fichier audio fourni.");
   if (!API_KEY) throw new Error("Aucune API key fournie.");
 
-  const response = await fetch(`${API_BASE_URL}/batchTranscription/delete/${job_id}`, {
+  const response = await fetch(`${API_BASE_URL}/api/batchTranscription/delete/${job_id}`, {
     headers: { "X-API-KEY": API_KEY }
   });
 
