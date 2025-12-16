@@ -1,5 +1,5 @@
 /* Main page for audio transcription */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 // Import logo
 // @ts-ignore: SVG module declaration missing in project types
 import logo from '../assets/images/logo-ch-vauclaire.svg';
@@ -44,7 +44,6 @@ export default function AudioTranscriptionScreen() {
   const [audio, setAudio] = useState< Audio | null>(null);
   const [{alert, alertType}, setAlert] = useState<AlertState>({alert: "", alertType: "info"});
   const [transcription, setTranscription] = useState<string | null>(null);
-  const [transcriptionProgress, setTranscriptionProgress] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Function to handle audio setting from child components
@@ -63,11 +62,9 @@ export default function AudioTranscriptionScreen() {
       if (!audio) return;
 
       setIsLoading(true);
-      setTranscriptionProgress(10);
       try {
         // Create a new transcription job
         const job_uuid = await createJob(audio);
-        setTranscriptionProgress(50);
 
         // Polling for the transcription result
         let transcriptionResult: string | null = null;
@@ -80,7 +77,6 @@ export default function AudioTranscriptionScreen() {
             break;
           }
           attempts += 1;
-          setTranscriptionProgress(50 + (attempts / maxAttempts) * 40);
           await new Promise(res => setTimeout(res, 3000)); // Wait for 3 seconds before next poll
         }
 
@@ -94,7 +90,6 @@ export default function AudioTranscriptionScreen() {
         setAlert({alert: `Erreur lors de la transcription: ${error.message}`, alertType: "error"});
       } finally {
         setIsLoading(false);
-        setTranscriptionProgress(100);
       }
     };
 
@@ -196,7 +191,7 @@ export default function AudioTranscriptionScreen() {
         }}>
           <TranscriptionDisplay textToDisplay = {transcription ? transcription : null} onTextChange={setTranscription}  setAlert={setAlert}/>
           { alert && <Alert variant="outlined" severity={alertType}>{alert}</Alert> }
-          { isLoading && <LoadingBarProgress progress={transcriptionProgress}/> }
+          { isLoading && <LoadingBarProgress /> }
           <AudioPlayer audio = {audio}/>
         </Box>
       </Box>
