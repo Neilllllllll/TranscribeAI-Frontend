@@ -1,10 +1,14 @@
+
+import {API_KEY} from "../config.ts"
 export async function createJob(
   audio: any,
   signal?: AbortSignal
 ): Promise<string> {
+
   if (!audio?.blob) throw new Error("Aucun fichier audio fourni.");
+  if (!API_KEY) throw new Error("Aucune API key fournie.");
     
-  const headers = new Headers({ "X-API-KEY": "VOTRE_CLE" });
+  const headers = new Headers({ "X-API-KEY": API_KEY });
   const formData = new FormData();
   formData.append("audioFile", new File([audio.blob], audio.filename));
 

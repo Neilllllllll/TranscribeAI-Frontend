@@ -1,5 +1,5 @@
 import type { Audio } from "../../Shared/types/audio.types.ts";
-import {API_KEY} from "../config.ts"
+import { API_KEY } from "../config.ts"
 
 // Envoie une requete POST et return un identifiant
 export async function createJob(
