@@ -53,7 +53,9 @@ export default function TranscriptionBatchPage() {
     // En seconde
     const pollInterval = Number(TIMEBETTWENEACHPOLLING) || 3000;
     const maxTime = Number(MAXTIMEPROCESSING) || 300000;
-    console.log(pollInterval);
+
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const fetchTranscription = async () => {
       if (!audio) return;
@@ -61,14 +63,14 @@ export default function TranscriptionBatchPage() {
       setIsLoading(true);
       try {
         // Create a new transcription job
-        const job_uuid = await createJob(audio);
+        const job_uuid = await createJob(audio, signal);
         // Polling for the transcription result
         let transcriptionResult: string | null = null;
         let attempts = 0;
         const maxAttempts = maxTime/pollInterval;
 
-        while (attempts < maxAttempts) {
-          transcriptionResult = await getTranscriptionByUuid(job_uuid);
+        while (attempts < maxAttempts && !signal.aborted) {
+          transcriptionResult = await getTranscriptionByUuid(job_uuid, signal);
           if (transcriptionResult) {
             break;
           }
@@ -76,19 +78,28 @@ export default function TranscriptionBatchPage() {
           await new Promise(res => setTimeout(res, pollInterval)); // Wait for 3 seconds before next poll
         }
 
-        if (transcriptionResult) {
-          setTranscription(transcriptionResult);
-          setAlert({alert: "Transcription réussie!", alertType: "success"});
-        } else {
-          setAlert({alert: "Échec de la récupération de la transcription dans le délai imparti.", alertType: "error"});
+        if (!signal.aborted) {
+          if (transcriptionResult) {
+            setTranscription(transcriptionResult);
+            setAlert({alert: "Transcription réussie!", alertType: "success"});
+          } else {
+            setAlert({alert: "Délai dépassé", alertType: "error"});
+          }
         }
       } catch (error: any) {
-        setAlert({alert: `Erreur lors de la transcription: ${error.message}`, alertType: "error"});
+          if (error.name === 'AbortError') {
+            console.log('aborted');
+          } else {
+            setAlert({alert: `Erreur: ${error.message}`, alertType: "error"});
+          }
       } finally {
-        setIsLoading(false);
+        if (!signal.aborted) setIsLoading(false);
       }
     };
     fetchTranscription();
+    return () => {
+      controller.abort();
+    };
   }, [audio]);
 
   return (

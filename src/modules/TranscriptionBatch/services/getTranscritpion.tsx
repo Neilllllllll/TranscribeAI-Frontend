@@ -2,7 +2,8 @@ import {API_KEY} from '../config.ts'
 
 // Envoie une requete GET pour récupérer la transcription
 export async function getTranscriptionByUuid(
-  job_uuid: string
+  job_uuid: string,
+  signal?: AbortSignal
 ): Promise<string> {
 
   // Vérifie les données manquantes
@@ -10,7 +11,8 @@ export async function getTranscriptionByUuid(
   if (!API_KEY) throw new Error("Aucune API key fournie.");
 
   const response = await fetch("/api/batchTranscription/result?job_uuid=" + job_uuid, {
-    headers: { "X-API-KEY": API_KEY }
+    headers: { "X-API-KEY": API_KEY },
+    signal
   });
 
   if (!response.ok) {
