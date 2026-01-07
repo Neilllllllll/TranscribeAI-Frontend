@@ -9,10 +9,11 @@ export async function createJob(
 
   if (!audio?.blob) throw new Error("Aucun fichier audio fourni.");
   if (!API_KEY) throw new Error("Aucune API key fournie.");
-    
+
   const headers = new Headers({ "X-API-KEY": API_KEY });
+  const audioFile = new File([audio.blob], audio.filename, { type: audio.mimeType });
   const formData = new FormData();
-  formData.append("audioFile", new File([audio.blob], audio.filename));
+  formData.append("audioFile", audioFile);
 
   const response = await fetch("/api/diarizationTranscription/createJob", {
     method: "POST",
