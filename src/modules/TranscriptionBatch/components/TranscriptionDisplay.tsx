@@ -14,11 +14,11 @@ Faire d'afficher des timestamps cliquables dans le texte pour aller à un moment
 Se renseigner pour défiinr une key pour chaque token
 */
 
-import CopyButton from './CopyButton.tsx';
+import CopyButton from '../../Shared/components/CopyButton.tsx';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { AlertState } from '../types/alert.types.ts';
+import { AlertState } from '../../Shared/types/alert.types.ts';
 import { useTheme } from '@mui/material/styles';
 
 type TranscriptionDisplayProps = {

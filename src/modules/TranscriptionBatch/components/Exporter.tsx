@@ -15,8 +15,8 @@ import ArticleIcon from '@mui/icons-material/Article';
 import NotesIcon from '@mui/icons-material/Notes';
 import IosShareIcon from '@mui/icons-material/IosShare';
 // Import our exporter utility
-import { FileExporter } from "../utils/TexteExporter.tsx";
-import { AlertState } from "../types/alert.types.ts";
+import { FileExporter } from "../utils.js/TexteExporter.tsx";
+import { AlertState } from "../../Shared/types/alert.types.ts";
 
 interface ExporterProps {
   textToExport: string | null;

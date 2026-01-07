@@ -1,5 +1,5 @@
 /* Componente for uploading audio files, it return the selected file to the parent component */
-import { MAXSIZEBYTES as MAXSIZEBYTES_VAL } from "../config.ts";
+import { env } from "../../../config/env.ts";
 // Import react hooks
 import { useRef } from "react";
 // Import components from material UI
@@ -18,7 +18,8 @@ interface AudioUploadProps {
 }
 
 export default function AudioUpload({onUploadEnd, setAlert}: AudioUploadProps) {
-
+    const MAXSIZEBYTES_VAL = env.MAXSIZEBYTES;
+    
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     // Sécurité : si la conversion échoue, on prend 20 par défaut

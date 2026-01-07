@@ -1,52 +1,42 @@
-# 📚 Documentation frontend et conventions 
+# 📚 Documentation Frontend
 
-Ce projet a été initialisé avec [Create React App](https://github.com/facebook/create-react-app).
+Ce document fournit un aperçu de l'architecture, des conventions de développement de notre frontend ainsi que les étapes pour le récupérer et l'utiliser.
 
-### Prérequis 
+## 1. Présentation générale
 
-| Outil   | Version minimale | Vérification    | Installation                                            |
-| ------- | ---------------- | --------------- | ------------------------------------------------------- |
-| **npm** | `>= 10.9.3`      | `npm --version` | [Télécharger Node.js (inclut npm)](https://nodejs.org/) |
+Le but de l'application est de permettre à l'utilisateur d'utiliser des modèles IA pour effectué les tâches suivantes : 
+* Transcription speech to text
+* Diarization
 
+Concernant la structure du projet nous avons sélectionné l'approche dite modulaire/ par domaine. 
+L'idée étant tout simplement de regrouper les fonctionalités par les éléments qui leur sont concernées. 
 
-## Récupération du projet en local
+**Un module de transcription, un module de diarization, ...**
 
-#### Créer un dossier pour accueillir le projet
+## 2. Structures du projet et conventions
 
-### ``` mkdir Frontend-TranscribeAI```
-### ``` cd Frontend-TranscribeAI```
+L'idée est que chaque module doit fonctionner comme une mini-application **autonome**. 
 
-#### Cloner le dépôt Git
+### Structure d'un module
+---
+### components/
+> **Fonction Principale :** Le dossier components sert de stockage des différents composants spécifiques au module concerné.
 
-### `git clone https://github.com/Neilllllllll/Frontend-TranscribeAI.git`
+**Impératif :** 
+* Ne doit pas contenir de logique métier complexe (juste de l'affichage).
+---
+### hooks/
+> **Fonction Principale :** La logique métier
+---
+### types/
+> **Fonction Principale :** Les interfaces TypeScript spécifiques
+---
+### services/
+> **Fonction Principale :** Les call API liées au module
+---
+### index.tsx
+> **Fonction Principale :** exporte la page
+---
 
-#### Se déplacer dans le dossier du projet
-
-### `cd Frontend-TranscribeAI`
-
-#### Installer les dépendances
-
-### `npm install`
-
-Le projet est maintenant installé et prêt à être lancé sur votre machine.
-
-## Description des dossiers essentiels
-
-| Dossier / Fichier | Rôle                                                  |
-| ----------------- | ----------------------------------------------------- |
-| `src/`            | Code source du projet React.                          |
-| `src/components/` | Composants réutilisables.                             |
-| `src/pages/`      | Pages principales                                     |
-| `src/utils/`      | Class utilitaires génériques.                         |
-| `App.js`          | Page par défaut                                       |
-| `api`            | Call api|
-| `types`            | Définis les types utilisés dans plusieurs fichiers|
-| `styles`            | style des pages |
-
-## Convetion de nommage
-
-
-
-
-
-
+### Le dossier Shared
+> **Fonction Principale :** Stocke les composants UI et utils globaux (utilisées dans plusieurs modules)

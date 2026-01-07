@@ -1,0 +1,115 @@
+{
+  "status": "success",
+  "data": {
+    "job_id": "550e8400-e29b-41d4-a716-446655440000",
+    "status": "completed",
+    "diarization_time": 12.45,
+    "result": {
+      "language": "fr",
+      "segments": [
+        {
+          "start": 0.03,
+          "end": 11.35,
+          "speaker": "SPEAKER_02",
+          "text": "Le débat éco, ils ont bu du Kikéon ce matin, ils sont membres d'un village qui résiste envers et contre tout à ses périls, dont parlait Anne Rosencher il y a un instant."
+        },
+        {
+          "start": 11.37,
+          "end": 16.65,
+          "speaker": "SPEAKER_02",
+          "text": "Dimanche, dimanche, on fêtera les trois ans de Tchatjipiti."
+        },
+        {
+          "start": 16.69,
+          "end": 19.3,
+          "speaker": "SPEAKER_02",
+          "text": "Bonjour Thomas Porcher, Dominique Seux."
+        },
+        {
+          "start": 19.32,
+          "end": 19.78,
+          "speaker": "SPEAKER_01",
+          "text": "Bonjour."
+        },
+        {
+          "start": 19.76,
+          "end": 29.39,
+          "speaker": "SPEAKER_02",
+          "text": "L'application ChatGPT qui nous permet d'obtenir des réponses en langage humain à la plupart des questions que nous nous posons en quelques fractions de secondes."
+        },
+        {
+          "start": 29.41,
+          "end": 34.4,
+          "speaker": "SPEAKER_02",
+          "text": "800 millions de personnes l'utiliseraient au moins une fois par semaine."
+        },
+        {
+          "start": 34.42,
+          "end": 41.55,
+          "speaker": "SPEAKER_02",
+          "text": "Bien d'autres outils, bien d'autres logiciels, chatbots du même genre sont apparus, copilote, cloud perplexity."
+        },
+        {
+          "start": 41.53,
+          "end": 43.13,
+          "speaker": "SPEAKER_02",
+          "text": "Et j'en oublie évidemment."
+        },
+        {
+          "start": 43.19,
+          "end": 50.24,
+          "speaker": "SPEAKER_02",
+          "text": "Il y a quelques semaines, vous avez échangé, messieurs, sur l'impact de l'intelligence artificielle sur le commerce."
+        },
+        {
+          "start": 50.26,
+          "end": 52.91,
+          "speaker": "SPEAKER_02",
+          "text": "Là, nous allons ouvrir la focale plus large."
+        },
+        {
+          "start": 52.95,
+          "end": 58.7,
+          "speaker": "SPEAKER_02",
+          "text": "D'abord, d'un mot, dites-nous chacun quelle est votre utilisation personnelle de ChatGPT."
+        },
+        {
+          "start": 58.72,
+          "end": 59.5,
+          "speaker": "SPEAKER_02",
+          "text": "Thomas ?"
+        },
+        {
+          "start": 59.48,
+          "end": 65.20,
+          "speaker": "SPEAKER_00",
+          "text": "Alors, moi je l'utilise principalement pour synthétiser des rapports de 300 pages que je n'ai pas le temps de lire intégralement avant le cours."
+        },
+        {
+          "start": 65.25,
+          "end": 69.10,
+          "speaker": "SPEAKER_00",
+          "text": "C'est un gain de temps phénoménal, même s'il faut toujours vérifier les sources citées."
+        },
+        {
+          "start": 69.15,
+          "end": 70.40,
+          "speaker": "SPEAKER_02",
+          "text": "Et vous, Dominique ?"
+        },
+        {
+          "start": 70.45,
+          "end": 78.90,
+          "speaker": "SPEAKER_01",
+          "text": "Je m'en sers comme d'un traducteur amélioré et pour structurer des plans d'articles quand je suis face à la page blanche."
+        },
+        {
+          "start": 78.95,
+          "end": 85.00,
+          "speaker": "SPEAKER_01",
+          "text": "Mais attention, ça reste un outil de productivité, pas un outil de réflexion stratégique."
+        }
+      ]
+    }
+  }
+}

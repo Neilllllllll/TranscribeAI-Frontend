@@ -2,7 +2,7 @@
 // Import react hooks
 import { useState, useRef, useEffect } from "react";
 // Import a class that allows to record
-import Recorder from '../utils/Recorder';
+import Recorder from '../utils/Recorder.js';
 // Import icons from material UI
 import PauseIcon from '@mui/icons-material/Pause';
 import StopIcon from '@mui/icons-material/Stop';
