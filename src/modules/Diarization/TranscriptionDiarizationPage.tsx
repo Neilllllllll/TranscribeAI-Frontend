@@ -16,14 +16,14 @@ import { createJob } from "./services/postAudio.tsx";
 import { getDiarizationByUuid } from "./services/getDiarization.tsx";
 import type { Audio } from "../Shared/types/audio.types.ts";
 import type { AlertState } from "../Shared/types/alert.types.ts";
-import type { DiarizationResponse } from "./types/diarization.types.ts";
+import type { DiarizationData } from "./types/diarization.types.ts";
 
 export default function DiarizationPage() {
   const [audio, setAudio] = useState<Audio | null>(null);
   const [{ alert, alertType }, setAlert] = useState<AlertState>({ alert: "", alertType: "info" });
   
   // State pour les résultats et paramètres
-  const [diarization, setDiarization] = useState<DiarizationResponse | null>(null);
+  const [diarization, setDiarization] = useState<DiarizationData | null>(null);
   const [numSpeakers, setNumSpeakers] = useState<number>(2);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [queuePos, setQueuePos] = useState<number | null>(null);
@@ -40,59 +40,64 @@ export default function DiarizationPage() {
     setAlert({ alert: null, alertType: "info" });
   };
 
-  // Logique principale de traitement (Polling)
-  useEffect(() => {
+useEffect(() => {
+    // En seconde
     const pollInterval = 3000;
-    const maxTime = 300000; // 5 minutes timeout
+    const maxTime = 300000;
+
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const fetchDiarization = async () => {
       if (!audio) return;
 
       setIsLoading(true);
-      setAlert({ alert: "Envoi du fichier...", alertType: "info" });
-
       try {
-        // 1. Création du Job avec le nombre de locuteurs
-        const job_uuid = await createJob(audio);
-        setAlert({ alert: "Traitement en cours... Veuillez patienter.", alertType: "warning" });
-
-        // 2. Polling
-        let diarizationResult: DiarizationResponse | null = null;
+        // Create a new transcription job
+        const job_uuid = await createJob(audio, signal);
+        // Polling for the transcription result
+        let diarizationResult: DiarizationData | null = null;
         let attempts = 0;
-        const maxAttempts = maxTime / pollInterval;
+        const maxAttempts = maxTime/pollInterval;
 
-        while (attempts < maxAttempts) {
-          diarizationResult = await getDiarizationByUuid(job_uuid);
-
-          if (diarizationResult.status === "completed") {
+        while (attempts < maxAttempts && !signal.aborted) {
+          diarizationResult = await getDiarizationByUuid(job_uuid, signal);
+          if (diarizationResult) {
             break;
-          } 
-          
-          if (diarizationResult.status === "failed") {
-            throw new Error("Le traitement a échoué côté serveur.");
           }
-
           attempts += 1;
-          await new Promise(res => setTimeout(res, pollInterval));
+          await new Promise((resolve, reject) => {
+            const timer = setTimeout(resolve, pollInterval);
+            // Si le signal est avorté pendant le dodo, on rejette pour sortir du try/catch
+            signal.addEventListener('abort', () => {
+              clearTimeout(timer);
+              reject(new DOMException('Aborted', 'AbortError'));
+            }, { once: true });
+          });
         }
 
-        // 3. Résultat final
-        if (diarizationResult && diarizationResult.status === "completed") {
-          setDiarization(diarizationResult);
-          setAlert({ alert: "Diarisation terminée avec succès !", alertType: "success" });
-        } else {
-          setAlert({ alert: "Délai d'attente dépassé.", alertType: "error" });
+        if (!signal.aborted) {
+          if (diarizationResult) {
+            setDiarization(diarizationResult);
+            setAlert({alert: "Diarization réussie!", alertType: "success"});
+          } else {
+            setAlert({alert: "Délai dépassé", alertType: "error"});
+          }
         }
-
       } catch (error: any) {
-        setAlert({ alert: `Erreur : ${error.message}`, alertType: "error" });
+          if (error.name === 'AbortError') {
+            console.log('aborted');
+          } else {
+            setAlert({alert: `Erreur: ${error.message}`, alertType: "error"});
+          }
       } finally {
-        setIsLoading(false);
-        setQueuePos(null);
+        if (!signal.aborted) setIsLoading(false);
       }
     };
-
     fetchDiarization();
+    return () => {
+      controller.abort();
+    };
   }, [audio]);
 
   return (
@@ -132,7 +137,7 @@ export default function DiarizationPage() {
           <AudioPlayer audio={audio} />
         </Box>
 
-        {diarization?.result && (
+        {diarization?.segments && (
           <Paper 
             elevation={3} 
             sx={{ 
@@ -150,7 +155,7 @@ export default function DiarizationPage() {
               overflowY: 'auto',
               bgcolor: '#fafafa'
             }}>
-              {diarization.result.segments.map((segment, index) => (
+              {diarization.segments.map((segment, index) => (
                 <Box key={index} sx={{ mb: 2 }}>
                   <SpeakerBubble 
                     text={segment.text}

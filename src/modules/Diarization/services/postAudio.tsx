@@ -1,7 +1,9 @@
 
+import { Audio } from '../../Shared/types/audio.types.ts'
+
 import {API_KEY} from "../config.ts"
 export async function createJob(
-  audio: any,
+  audio: Audio,
   signal?: AbortSignal
 ): Promise<string> {
 
