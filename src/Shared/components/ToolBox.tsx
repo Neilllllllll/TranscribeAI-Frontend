@@ -1,4 +1,4 @@
-import { useState, ReactNode, createContext, useContext } from "react"; // Ajout de ReactNode
+import { ReactNode } from "react"; // Ajout de ReactNode
 import Divider from '@mui/material/Divider';
 import { styled, CSSObject, Theme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
@@ -49,17 +49,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    position: 'relative',
     height: '100%',
     '& .MuiDrawer-paper': {
-      position: 'relative', 
-      boxSizing: 'border-box',
-      elevation: 0,
-      height: '100%',
-      borderTop: 'none',
-      borderBottom: 'none',
-      borderLeft: 'none',
+      position: 'relative',
+      height: '100%',  
+      display: 'flex',
+      flexDirection: 'column',
+      overflowX: 'hidden',
     },
     variants: [
       {
@@ -90,7 +86,7 @@ interface ToolBoxProps {
 export default function ToolBox({ children, open, setOpen }: ToolBoxProps) {
 
   return (
-      <Box sx= {{minHeight: "100%"}}>
+      <Box>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader 
           sx={{
@@ -105,11 +101,8 @@ export default function ToolBox({ children, open, setOpen }: ToolBoxProps) {
           <Divider />
           {/* Conteneur pour les enfants dynamiques */}
           <Box sx={{ 
-            width: '100%',
-            display: 'flex', 
-            flexDirection: 'column',
-            alignItems: open ? 'center' : 'left', 
-          }}>
+                alignItems: open ? 'center' : 'left',
+              }}>
             {children}
           </Box>
         </Drawer>

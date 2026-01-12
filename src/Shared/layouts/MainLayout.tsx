@@ -38,6 +38,7 @@ export default function MainLayout() {
       flexDirection: 'column', 
       height: '100vh',
       width: '100vw',
+      overflow: 'hidden'
     }}>
         {/* 2. Header : Reste en haut naturellement (flex item) */}
       <Box component="nav" sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
@@ -62,7 +63,9 @@ export default function MainLayout() {
       {/* 3. Main */}
         <Box component="main" sx={{ 
           flexGrow : '1',
-          height: '100%'
+          display: 'flex',
+          overflow: 'hidden',
+          minHeight: 0
         }}>
           <Outlet /> 
         </Box>

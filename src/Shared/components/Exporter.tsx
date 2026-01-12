@@ -15,15 +15,15 @@ import ArticleIcon from '@mui/icons-material/Article';
 import NotesIcon from '@mui/icons-material/Notes';
 import IosShareIcon from '@mui/icons-material/IosShare';
 // Import our exporter utility
-import { FileExporter } from "../utils.js/TexteExporter.tsx";
-import { AlertState } from "../../Shared/types/alert.types.ts";
+import { FileExporter } from "../../modules/TranscriptionBatch/utils/TexteExporter.tsx";
+import { useAlert } from '../contexts/AlertContext.tsx';
 
 interface ExporterProps {
   textToExport: string | null;
-  setAlert: (alert: AlertState) => void;
 }
 
-export default function Exporter({textToExport, setAlert}: ExporterProps) {
+export default function Exporter({textToExport}: ExporterProps) {
+  const {showAlert} = useAlert();
   
   const exporter = new FileExporter();
   const [open, setOpen] = useState<boolean>(false);
@@ -33,7 +33,7 @@ export default function Exporter({textToExport, setAlert}: ExporterProps) {
 
   const checkTextToExport = () => {
     if(textToExport === null || textToExport === "") {
-      setAlert({alert: "Impossible d'exporter un texte vide.", alertType: "error"});
+      showAlert("Impossible d'exporter un texte vide.", "error");
       return false;
     }
     return true;
@@ -41,23 +41,23 @@ export default function Exporter({textToExport, setAlert}: ExporterProps) {
 
   const handlerExportToDocx  = async () => {
     if(!checkTextToExport()) return;
-    setAlert({alert: "Exportation vers DOCX en cours...", alertType: "info"});
+    showAlert("Exportation vers DOCX en cours...", "info");
     await exporter.exportDocx("mon_document", textToExport ?? null);
-    setAlert({alert: "Exportation vers DOCX terminée.", alertType: "success"});
+    showAlert("Exportation vers DOCX terminée.", "success");
   }
 
   const handlerExportToPdf  = () => {
     if(!checkTextToExport()) return;
-    setAlert({alert: "Exportation vers PDF en cours...", alertType: "info"});
+    showAlert("Exportation vers PDF en cours...", "info");
     exporter.exportPdf("mon_document", textToExport ?? null);
-    setAlert({alert: "Exportation vers PDF terminée.", alertType: "success"});
+    showAlert("Exportation vers PDF terminée.", "success");
   }
 
   const handlerExportToTxt  = async () => {
     if(!checkTextToExport()) return;
-    setAlert({alert: "Exportation vers TXT en cours...", alertType: "info"});
+    showAlert("Exportation vers TXT en cours...", "info");
     exporter.exportTxt("mon_document", textToExport ?? null);
-    setAlert({alert: "Exportation vers TXT terminée.", alertType: "success"});
+    showAlert("Exportation vers TXT terminée.", "success");
   }
 
   return (
