@@ -19,7 +19,7 @@ export async function createJob(
   formData.append("audioFile", audioFile);
 
   // Envoie de la requete
-  const response = await fetch("http://localhost:5000/api/batchTranscription/createJob", {
+  const response = await fetch("/api/batchTranscription/createJob", {
     method: "POST",
     headers: headers,
     body: formData,

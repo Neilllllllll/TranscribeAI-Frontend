@@ -168,7 +168,6 @@ export default function DiarizationPage() {
           </Box>
         </>  
         }
-
         </ResizableSidebar>
 
       {/* Main */}

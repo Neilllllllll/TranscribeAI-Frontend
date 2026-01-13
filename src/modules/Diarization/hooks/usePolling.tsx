@@ -45,7 +45,7 @@ export const usePolling = (audio: Audio | null) : UseDiarizationReturn => {
 
         // 2. Polling Loop
         while (attempts < maxAttempts && !signal.aborted && !isComplete) {
-          const payload = await getDiarizationByUuid(jobId, signal);
+          const payload = await getDiarizationByUuid(jobId);
           const status = payload.data.status;
 
           if (status === "COMPLETED") {

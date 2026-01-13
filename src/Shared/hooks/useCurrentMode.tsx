@@ -16,7 +16,6 @@ export function useGetCurrentMode() {
     
     if (activeRoute) {
       setMode(activeRoute);
-      console.log("Mode détecté :", activeRoute.id);
     }
   }, [currentPath]);
 

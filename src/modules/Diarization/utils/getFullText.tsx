@@ -8,6 +8,5 @@ export const fullText = (param: DiarizationTemplate): string => {
             text += segment.text + ' ';
         }
     }
-    console.log ("Full text generated:", text);
     return text.trim();
 };

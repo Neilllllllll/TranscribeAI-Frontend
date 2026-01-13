@@ -32,12 +32,10 @@ export default class Recorder {
 
     this.audioChunks = [];
     this.mediaRecorder.start();
-    console.log("🔴 Enregistrement démarré");
   }
 
   // Mettre en pause l'enregistrement
   pause() {
-    console.log(this);
     if (!this.isInit()) {
       return;
     }
@@ -45,7 +43,6 @@ export default class Recorder {
     if (this.mediaRecorder.state === "recording") {
       this.mediaRecorder.pause();
       this.isPaused = true;
-      console.log("⏸️ Enregistrement mis en pause");
     } else {
       console.warn("⚠️ Impossible de mettre en pause : aucun enregistrement actif.");
     }
@@ -60,7 +57,6 @@ export default class Recorder {
     if (this.mediaRecorder.state === "paused") {
       this.mediaRecorder.resume();
       this.isPaused = false;
-      console.log("▶️ Enregistrement repris");
     } else {
       console.warn("⚠️ Impossible de reprendre : l'enregistrement n'est pas en pause.");
     }
@@ -80,7 +76,6 @@ export default class Recorder {
       });
       
       this.mediaRecorder.stop();
-      console.log("🛑 Enregistrement arrêté");
     });
   }
 
@@ -99,7 +94,6 @@ export default class Recorder {
   cleanup() {
     if (this.stream) {
       this.stream.getTracks().forEach((track) => track.stop());
-      console.log("🧹 Micro libéré");
     }
   }
 }
