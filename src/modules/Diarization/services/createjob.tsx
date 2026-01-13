@@ -1,11 +1,11 @@
-
 import { Audio } from '../../../Shared/types/audio.types.ts'
-
+import type {CreateJobAPIResponse} from '../../../Shared/types/createJobResponse.type.ts'
 import {API_KEY} from "../config.ts"
+
 export async function createJob(
   audio: Audio,
   signal?: AbortSignal
-): Promise<string> {
+): Promise<CreateJobAPIResponse> {
 
   if (!audio?.blob) throw new Error("Aucun fichier audio fourni.");
   if (!API_KEY) throw new Error("Aucune API key fournie.");
@@ -24,5 +24,5 @@ export async function createJob(
 
   if (!response.ok) throw new Error("Erreur lors de l'envoi");
   const payload = await response.json();
-  return payload.data.job_uuid;
+  return payload;
 }

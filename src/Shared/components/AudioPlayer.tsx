@@ -7,7 +7,6 @@ import { Audio } from "../types/audio.types.ts";
 interface Props {
     audio: Audio | null,
     setCurrentTime: (currentTime: number) => void,
-
 }
 
 const AudioPlayer = forwardRef<HTMLAudioElement, Props>(({ audio, setCurrentTime }, ref) => {

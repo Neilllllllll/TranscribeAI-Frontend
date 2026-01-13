@@ -1,5 +1,5 @@
 import {API_KEY} from '../config.ts'
-import {getStatusAPIResponse} from '../types/getterSchema.ts'
+import {getStatusAPIResponse} from '../types/api_data.ts'
 
 // Envoie une requete GET pour récupérer la transcription et/ou l'état du job
 export async function getTranscriptionByUuid(

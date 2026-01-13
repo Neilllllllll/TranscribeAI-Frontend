@@ -3,7 +3,7 @@ import CopyButton from '../../../Shared/components/CopyButton.tsx';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { TranscriptionSegment } from '../types/getterSchema.ts';
+import { TranscriptionSegment } from '../types/api_data.ts';
 import { useTheme } from '@mui/material/styles';
 import { fullText } from '../utils/getText.tsx';
 
@@ -29,15 +29,13 @@ export default function TextBox({ segments, currentTime, goToTimestamp, onSegmen
     }
   }, [currentTime]);
 
-  console.log(segments);
-
 return (
     <Paper elevation={0} sx={{ width: "100%", height: "70vh", p: 2, 'display': "flex", "flexDirection": "column"}}>
       <Box>
         <CopyButton textToCopy={fullText(segments ?? [])}></CopyButton>
       </Box>
 
-      <Box sx={{ height: "95%", overflowY: "auto" }}>
+      <Box sx={{ height: "95%", overflowY: "auto", flexWrap: "wrap"}}>
         {(!segments || segments.length === 0) ? <Typography>Votre transcription s'affichera ici ...</Typography> : null}
         {segments?.map((segment) => {
           const isActive = currentTime >= segment.start && currentTime <= segment.end;
@@ -50,7 +48,8 @@ return (
               onClick={() => goToTimestamp?.(segment.start)}
               sx={{
                 display: 'inline', 
-                backgroundColor: isActive ? theme.palette.text.highlight : 'transparent'
+                backgroundColor: isActive ? theme.palette.text.highlight : 'transparent',
+                wordBreak: 'break-word'
               }}
             >
               <span
@@ -58,7 +57,7 @@ return (
                 suppressContentEditableWarning
                 onBlur={(e) => onSegmentChange(segment.id, e.currentTarget.innerText)}
               >
-                {segment.text}
+                {segment.text + " "}
               </span>
             </Box>
           );

@@ -7,7 +7,7 @@ import { Module } from './types/module.type.ts';
 export const MODULE_ROUTES: Module[] = [
   {
     id: 'transcription',
-    title: "Transcription brute",
+    title: "Mono-voix",
     description: "Convertissez vos fichiers audio volumineux en texte avec précision.",
     icon: <RecordVoiceOverIcon />,
     path: "transcriptionBatch",
@@ -16,7 +16,7 @@ export const MODULE_ROUTES: Module[] = [
   },
   {
     id: 'diarization',
-    title: "Diarization",
+    title: "Multi-voix",
     description: "Identifiez automatiquement les différents locuteurs dans une conversation.",
     icon: <GroupsIcon />,
     path: "diarization",

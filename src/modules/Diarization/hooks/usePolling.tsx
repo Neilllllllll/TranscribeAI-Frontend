@@ -1,20 +1,20 @@
 // hooks/useTranscription.ts
 import { useState, useEffect } from "react";
-import { createJob } from "../services/createJob.tsx";
-import { getTranscriptionByUuid } from "../services/getTranscritpion.tsx";
-import type { Audio } from "../../../Shared/types/audio.types";
-import type { getStatusAPIResponse } from "../types/api_data.ts";
+import { createJob } from '../services/createjob.tsx'
+import { getDiarizationByUuid } from "../services/getDiarization.tsx";
+import type { Audio } from "../../../Shared/types/audio.types.ts";
+import type { getStatusAPIResponse } from "../types/api_data.types.ts";
 import { MAXTIMEPROCESSING, TIMEBETTWENEACHPOLLING } from "../config.ts";
 
-interface UseTranscriptionReturn {
-  transcriptionPayload: getStatusAPIResponse | null;
+interface UseDiarizationReturn {
+  diarizationPayload: getStatusAPIResponse | null;
   isLoading: boolean;
   error: string | null;
   statusInfo: string | null;
 }
 
-export const useTranscription = (audio: Audio | null) : UseTranscriptionReturn => {
-  const [transcriptionPayload, setTranscriptionPayload] = useState<getStatusAPIResponse | null>(null);
+export const usePolling = (audio: Audio | null) : UseDiarizationReturn => {
+  const [diarizationPayload, setDiarizationPayload] = useState<getStatusAPIResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [statusInfo, setStatusInfo] = useState<string | null>(null);
@@ -28,7 +28,7 @@ export const useTranscription = (audio: Audio | null) : UseTranscriptionReturn =
     // Reset states
     setIsLoading(true);
     setError(null);
-    setTranscriptionPayload(null);
+    setDiarizationPayload(null);
 
     const pollInterval = Number(TIMEBETTWENEACHPOLLING) || 3000;
     const maxTime = Number(MAXTIMEPROCESSING) || 3000000;
@@ -45,16 +45,16 @@ export const useTranscription = (audio: Audio | null) : UseTranscriptionReturn =
 
         // 2. Polling Loop
         while (attempts < maxAttempts && !signal.aborted && !isComplete) {
-          const result = await getTranscriptionByUuid(jobId, signal);
-          const status = result.data.status;
+          const payload = await getDiarizationByUuid(jobId, signal);
+          const status = payload.data.status;
 
           if (status === "COMPLETED") {
-            setTranscriptionPayload(result);
+            setDiarizationPayload(payload);
             isComplete = true;
           } else if (status === "FAILED") {
-            throw new Error(result.data.error_message || "Échec de la transcription");
+            throw new Error(payload.data.error_message || "Échec de la transcription");
           } else if (status === "PENDING") {
-             setStatusInfo(`En file d'attente (Position: ${result.data.position})`);
+             setStatusInfo(`En file d'attente (Position: ${payload.data.position})`);
           } else if (status === "PROCESSING") {
              setStatusInfo("Traitement audio en cours...");
           }
@@ -83,5 +83,5 @@ export const useTranscription = (audio: Audio | null) : UseTranscriptionReturn =
     return () => controller.abort();
   }, [audio]); // Se relance uniquement si l'objet audio change
 
-  return { transcriptionPayload, isLoading, error, statusInfo };
+  return { diarizationPayload, isLoading, error, statusInfo };
 };

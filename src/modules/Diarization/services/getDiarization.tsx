@@ -1,11 +1,10 @@
 import {API_KEY} from '../config.ts'
-import { DiarizationData } from '../types/diarization.types.tsx';
+import type { getStatusAPIResponse } from '../types/api_data.types.ts';
 
-// Envoie une requete GET pour récupérer la transcription
+// Envoie une requete GET pour récupérer la diarization ou les statuts associés à un job_uuid
 export async function getDiarizationByUuid(
   job_uuid: string,
-  signal: AbortSignal
-): Promise<DiarizationData> {
+): Promise<getStatusAPIResponse> {
 
   // Vérifie les données manquantes
   if (!job_uuid) throw new Error("Aucun uuid fournit.");
@@ -20,5 +19,5 @@ export async function getDiarizationByUuid(
   }
 
   const payload = await response.json();
-  return payload.data.result;
+  return payload;
 }

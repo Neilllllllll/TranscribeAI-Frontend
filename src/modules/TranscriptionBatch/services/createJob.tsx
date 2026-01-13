@@ -26,7 +26,9 @@ export async function createJob(
     signal,
   });
 
-  if (!response.ok) throw new Error("Le serveur est injoignable");
+  if (!response.ok) {
+    throw new Error("Le serveur est injoignable");
+  }
 
   const payload = await response.json();
   return payload;

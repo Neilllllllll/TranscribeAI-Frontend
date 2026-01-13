@@ -55,12 +55,11 @@ export default function AudioUpload({onUploadEnd, MAXSIZEBYTES_VAL}: AudioUpload
             onChange={handleFileChange}
         />
         <ListItem disablePadding>
-            <ListItemButton disabled={false} onClick={handleClick}>
+            <ListItemButton disabled={false} onClick={handleClick} >
                 <ListItemIcon>
                     <UploadFileIcon />
                 </ListItemIcon>
-                <ListItemText primary="Téléverser" 
-                            secondary={"Max " + MAXSIZEBYTES_VAL + " Mo"}/>
+                <ListItemText primary={"Téléverser : Max " + MAXSIZEBYTES_VAL + " Mo" }/>
             </ListItemButton>
         </ListItem>
     </>

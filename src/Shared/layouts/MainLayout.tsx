@@ -23,11 +23,13 @@ import { useColorMode } from '../../core/theme/ThemeContext.tsx';
 export default function MainLayout() {
   const navigate = useNavigate();
   const currentMode = useGetCurrentMode();
-  const { alertConfig } = useAlert();
+  const { alertConfig, hideAlert } = useAlert();
   const theme = useTheme();
   const colorMode = useColorMode();
 
+
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    hideAlert()
     navigate(newValue);
   };
 
@@ -50,7 +52,7 @@ export default function MainLayout() {
         />
 
         <Box>
-          { alertConfig.alert ? <Alert severity={alertConfig.alertType}>{alertConfig.alert}</Alert> : <Typography variant="h4" >Mode de {currentMode?.title}</Typography> }
+          { alertConfig.alert ? <Alert severity={alertConfig.alertType}>{alertConfig.alert}</Alert> : <Typography variant="h4" >{currentMode?.title}</Typography> }
         </Box>
 
         <IconButton onClick={colorMode.toggleColorMode} color="inherit">

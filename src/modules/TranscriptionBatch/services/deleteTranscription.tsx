@@ -1,3 +1,5 @@
+import { API_KEY } from "../config";
+
 // Envoie une requete DELETE pour annuler une transcription
 export async function deleteTranscription(
   job_id: string

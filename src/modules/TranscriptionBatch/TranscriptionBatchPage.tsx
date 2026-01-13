@@ -1,7 +1,7 @@
 /* Main page for audio transcription */
 import { useEffect, useState, useRef } from "react";
 import Box from '@mui/material/Box';
-import ToolBox from '../../Shared/components/ToolBox.tsx'
+import ResizableSidebar from '../../Shared/components/ResizableSidebar.tsx'
 // Import our components
 import TextBox from './components/TextBox.tsx';
 import AudioUpload from '../../Shared/components/AudioUpload.tsx';
@@ -14,7 +14,7 @@ import WordReplacement from './components/WordReplacement.tsx'
 import Exporter from '../../Shared/components/Exporter.tsx'
 import Chip from '@mui/material/Chip';
 // Import API function
-import {TranscriptionSegment} from './types/getterSchema.ts'
+import {TranscriptionSegment} from './types/api_data.ts'
 import { useTranscription } from "./hooks/useTranscription.tsx";
 import { fullText } from "./utils/getText.tsx";
 // Import env
@@ -23,7 +23,7 @@ import { Divider } from "@mui/material";
 
 export default function TranscriptionBatchPage() {
   const { showAlert } = useAlert();
-  const [isToolboxOpen, setIsToolboxOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   // Lié à l'audio
   const [audio, setAudio] = useState<Audio | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -32,12 +32,10 @@ export default function TranscriptionBatchPage() {
   const { transcriptionPayload, isLoading, error, statusInfo } = useTranscription(audio); // Hook permettant le polling 
   const [segments, setSegments] = useState<TranscriptionSegment[]>([]); // Segments de texte récupérer par l'API
 
-  // Actualise les segments reçues 
-  useEffect(() => {
-    if (transcriptionPayload?.data.status === "COMPLETED"){
-      setSegments(transcriptionPayload.data.result.segments);
-    }
-  }, [transcriptionPayload]);
+  // Fonction pour basculer l'état du panneau
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   // Affectation de l'audio
   const handleAudioSetter = (newAudio: Audio) => {
@@ -60,7 +58,6 @@ export default function TranscriptionBatchPage() {
   const handleSeek = (seconds: number) => {
         if (audioRef.current) {
             audioRef.current.currentTime = seconds;
-            audioRef.current.play().catch(e => console.log("Lecture auto bloquée par le navigateur"));
         }
   };
 
@@ -70,13 +67,13 @@ export default function TranscriptionBatchPage() {
     if (statusInfo) showAlert(statusInfo, "info");
     if (transcriptionPayload?.data.status === "COMPLETED"){
       showAlert(`Succès ! Durée : ${transcriptionPayload.data.transcription_time}`, "success");
+      setSegments(transcriptionPayload.data.result.segments); // Actualise les segments reçues 
     } 
   }, [error, statusInfo, transcriptionPayload, showAlert]);
 
   // Change un mot et ses occurrence par un autre
   const handleGlobalReplace = (search: string, replace: string) => {
     const regex = new RegExp(search, 'gi'); 
-    
     setSegments(prevSegments => 
       prevSegments.map(seg => ({
         ...seg,
@@ -84,6 +81,7 @@ export default function TranscriptionBatchPage() {
       }))
     );
   };
+
   // Change un segment précis
   const handleManualEdit = (id: number, newText: string) => {
      setSegments(prevSegments => 
@@ -94,21 +92,29 @@ export default function TranscriptionBatchPage() {
   return (
     <Box sx={{ display: 'flex', width: '100%', height: "100%"}}>
       {/* Barre d'outil */}
-      <ToolBox open={isToolboxOpen} setOpen={setIsToolboxOpen}>
+
+      <ResizableSidebar 
+        open={isSidebarOpen}
+        onToggle={toggleSidebar}
+        side="right" // Optionnel, car "right" est la valeur par défaut
+        title="Boite à outils"
+        expandedWidth={300} // Largeur personnalisée pour le côté droit
+        collapsedWidth={50}
+      >
         {/* Section 1 : Entrée Audio */}
         {
-          isToolboxOpen && 
+          isSidebarOpen && 
           <Divider sx={{ my: 2, width: '90%' }}>
             <Chip label="Entrée Audio" size="small" sx={{ fontSize: '0.65rem' }} />
           </Divider>
         }
-        <Box sx={{ p: isToolboxOpen ? 1 : 0, width: '100%', display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <Box sx={{ p: isSidebarOpen ? 1 : 0, width: '100%', display: 'flex', flexDirection: 'column', gap: 1 }}>
           <AudioRecorder onRecordEnd={handleAudioSetter} />
           <AudioUpload onUploadEnd={handleAudioSetter} MAXSIZEBYTES_VAL={MAXSIZEAUDIO}/>
         </Box>
 
         {/* Section 2 : Edition du texte */}
-        { isToolboxOpen && 
+        { isSidebarOpen && 
         <>
           <Divider sx={{ my: 2, width: '90%' }}>
             <Chip label="Édition" size="small" sx={{ fontSize: '0.65rem' }} />
@@ -122,7 +128,7 @@ export default function TranscriptionBatchPage() {
           </Box>
         </>
         }
-        </ToolBox>
+        </ResizableSidebar>
       {/* Main */}
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <Box sx ={{
@@ -136,7 +142,7 @@ export default function TranscriptionBatchPage() {
           {/* Texte box où sera afficher les segments de texte récupérés */}
           <TextBox
           segments={segments} 
-          currentTime={currentTime} 
+          currentTime={currentTime}
           goToTimestamp={handleSeek} 
           onSegmentChange={handleManualEdit}/>
           { isLoading && <LoadingBarProgress /> }
