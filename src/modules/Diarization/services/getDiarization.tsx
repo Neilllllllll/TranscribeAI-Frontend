@@ -10,7 +10,7 @@ export async function getDiarizationByUuid(
   if (!job_uuid) throw new Error("Aucun uuid fournit.");
   if (!API_KEY) throw new Error("Aucune API key fournie.");
 
-  const response = await fetch("/api/diarizationTranscription/result?job_uuid=" + job_uuid, {
+  const response = await fetch("http://localhost:8000/api/job/" + job_uuid, {
     headers: { "X-API-KEY": API_KEY }
   });
 

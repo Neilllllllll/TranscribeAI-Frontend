@@ -27,8 +27,21 @@ export default function TextBox({ template, onAssignSpeaker, availableProfiles, 
   }, [currentTime]);
 
   return (
-    <Paper elevation={0} sx={{ width: "100%", height: "70vh", p: 2, 'display': "flex", "flexDirection": "column"}}>
-      <Box sx={{ height: "95%", overflowY: "auto" }}>
+    <Paper 
+      elevation={0} 
+      sx={{ 
+        width: "100%", 
+        flex: 1,      // Remplace height: "70vh"
+        minHeight: 0, // Important pour le scroll interne
+        p: 2, 
+        display: "flex", 
+        flexDirection: "column"
+      }}>
+      <Box sx={{ 
+        flex: 1,      // Prend tout l'espace du Paper
+        overflowY: "auto",
+        pr: 1         // Petit padding pour la scrollbar
+      }}>
         {template.textBubbles.length === 0 ? 
         <Typography>Votre transcription s'affichera ici... </Typography> :
         template.textBubbles.map((bubble, index) => (

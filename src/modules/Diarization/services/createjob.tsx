@@ -15,7 +15,7 @@ export async function createJob(
   const formData = new FormData();
   formData.append("audioFile", audioFile);
 
-  const response = await fetch("/api/diarizationTranscription/createJob", {
+  const response = await fetch("http://localhost:8000/api/job", {
     method: "POST",
     headers: headers,
     body: formData,

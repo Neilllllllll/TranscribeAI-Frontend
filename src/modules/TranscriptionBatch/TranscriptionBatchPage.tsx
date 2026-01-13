@@ -130,14 +130,21 @@ export default function TranscriptionBatchPage() {
         }
         </ResizableSidebar>
       {/* Main */}
-      <Box sx={{ flexGrow: 1, p: 3 }}>
+      <Box sx={{ 
+        width: "100%",
+        height: "100%", // Obligatoire pour définir une limite physique
+        display: "flex", 
+        flexDirection: "column",
+        p: 3,
+        boxSizing: "border-box" }}>
         <Box sx ={{
-          width : "100%",
-          height : "100%",
+          flex: 1, // Prend tout l'espace disponible
           display : 'flex',
           flexDirection :"column",
           alignItems : 'center',
-          gap : 2
+          gap : 2,
+          minHeight: 0, // Permet aux enfants de ne pas déborder
+          overflow: 'hidden'
         }}>
           {/* Texte box où sera afficher les segments de texte récupérés */}
           <TextBox
