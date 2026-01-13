@@ -43,8 +43,11 @@ export const useTranscription = (audio: Audio | null) : UseTranscriptionReturn =
         const maxAttempts = maxTime / pollInterval;
         let isComplete = false;
 
+        // Attente initiale avant le premier polling
+        await new Promise((r) => setTimeout(r, pollInterval));
+
         // 2. Polling Loop
-        while (attempts < maxAttempts && !signal.aborted && !isComplete) {
+        while (attempts < maxAttempts-1 && !signal.aborted && !isComplete) {
           const result = await getTranscriptionByUuid(jobId, signal);
           const status = result.data.status;
 
