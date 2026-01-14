@@ -30,8 +30,8 @@ export const usePolling = (audio: Audio | null) : UseDiarizationReturn => {
     setError(null);
     setDiarizationPayload(null);
 
-    const pollInterval = Number(TIMEBETTWENEACHPOLLING) || 3000;
-    const maxTime = Number(MAXTIMEPROCESSING) || 3000000;
+    const pollInterval = Number(TIMEBETTWENEACHPOLLING);
+    const maxTime = Number(MAXTIMEPROCESSING);
 
     const fetchProcess = async () => {
       try {
