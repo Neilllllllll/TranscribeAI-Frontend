@@ -57,7 +57,7 @@ export default function DiarizationPage() {
     if (error) showAlert(error, "error");
     if (statusInfo) showAlert(statusInfo, "info");
     if (diarizationPayload?.data.status === "COMPLETED"){
-      showAlert(`Succès ! Durée : ${formatTime(diarizationPayload.data.diarization_time)}`, "success");
+      showAlert(`La transcription multi-voix est un succès ! Durée : ${formatTime(diarizationPayload.data.diarization_time)}`, "success");
       setDiarizationResult(diarizationPayload.data.result);
     } 
   }, [error, statusInfo, diarizationPayload, showAlert]);

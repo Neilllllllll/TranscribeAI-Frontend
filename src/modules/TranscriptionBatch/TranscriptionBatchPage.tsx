@@ -68,7 +68,7 @@ export default function TranscriptionBatchPage() {
     if (error) showAlert(error, "error");
     if (statusInfo) showAlert(statusInfo, "info");
     if (transcriptionPayload?.data.status === "COMPLETED"){
-      showAlert(`Succès ! Durée : ${formatTime(transcriptionPayload.data.transcription_time)}`, "success");
+      showAlert(`La transcription est un succès ! Durée : ${formatTime(transcriptionPayload.data.transcription_time)}`, "success");
       setSegments(transcriptionPayload.data.result.segments); // Actualise les segments reçues 
     } 
   }, [error, statusInfo, transcriptionPayload, showAlert]);
