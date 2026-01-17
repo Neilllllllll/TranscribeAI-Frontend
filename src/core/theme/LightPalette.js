@@ -10,7 +10,7 @@ const lightPalette = createTheme({
       contrastText: '#fff', // Couleur du texte sur fond primaire
     },
     secondary: {
-      main: '#9c27b0',      // Utilisé pour les actions secondaires
+      main: '#04B2D9',      // Utilisé pour les actions secondaires
     },
     error: {
       main: '#d32f2f',

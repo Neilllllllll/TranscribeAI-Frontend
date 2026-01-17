@@ -10,7 +10,7 @@ const darkPalette = createTheme({
       contrastText: '#202124', 
     },
     secondary: {
-      main: '#f28b82', 
+      main: '#a982f2ff', 
     },
     error: {
       main: '#f28b82', 
@@ -19,7 +19,7 @@ const darkPalette = createTheme({
       main: '#fdd663', 
     },
     info: {
-      main: '#81c995',
+      main: '#0084ffff',
     },
     success: {
       main: '#81c995',
