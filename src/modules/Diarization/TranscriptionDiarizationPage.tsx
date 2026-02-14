@@ -13,8 +13,9 @@ import WordReplacement from '../TranscriptionBatch/components/WordReplacement.ts
 import type { Audio } from "../../Shared/types/audio.types.ts";
 import type { DiarizationState } from './types/ui_data.type.ts';
 import type { Speaker } from './types/ui_data.type.ts';
-// Hook
+// Contexte d'alerte
 import {useAlert} from '../../Shared/contexts/AlertContext.tsx'
+// Hook
 import { useState, useRef, useEffect } from "react";
 import { usePolling } from './hooks/usePolling.tsx';
 // Variable d'env
@@ -26,6 +27,10 @@ import { formatTime } from '../../Shared/utils/formatTime.tsx';
 
 export default function DiarizationPage() {
   const { showAlert } = useAlert();
+
+  // Paramètre pour la requete 
+  const [minSpeakers, setMinSpeakers] = useState<number | undefined>(undefined);
+  const [maxSpeakers, setMaxSpeakers] = useState<number | undefined>(undefined);
 
   const [diarizationData, setDiarizationData] = useState<DiarizationState>({ conversationFlow: [], speakersById: {} });
 
@@ -39,9 +44,7 @@ export default function DiarizationPage() {
   const [currentTime, setCurrentTime] = useState<number>(0);
 
   // Récupération de la diarization via le hook
-  const { diarizationPayload, isLoading, error, statusInfo } = usePolling(audio);
-  console.log('Flow de conv : ', diarizationData.conversationFlow);
-  console.log("liste des speakers : ", diarizationData.speakersById);
+  const { diarizationPayload, isLoading, error, statusInfo } = usePolling(audio, minSpeakers, maxSpeakers);
 
   // Actualisation du statuts
   useEffect(() => {
@@ -119,6 +122,10 @@ export default function DiarizationPage() {
     });
   };
 
+  const handleDelete = () => {    setDiarizationData({ conversationFlow: [], speakersById: {} });
+    showAlert("Transcription supprimée", "success");
+  };
+
   return (
     <Box sx={{ display: 'flex', width: '100%', height: "100%"}}>
       {/* Boite à outils de gauche */}
@@ -144,6 +151,9 @@ export default function DiarizationPage() {
         {/* Section 2 : Edition du texte */}
         { isLeftSidebarOpen &&      
         <>
+          <Divider sx={{ my: 2, width: '90%' }}>
+            <Chip label="Édition" size="small" sx={{ fontSize: '0.65rem' }} />
+          </Divider>
           <Box>
             <WordReplacement onReplace={handleGlobalReplace} />
           </Box>
@@ -177,7 +187,7 @@ export default function DiarizationPage() {
             currentTime={currentTime}
             gotoTimestamp={goToTimestamp}
             handleManualEdit={handleManualEdit}
-          />
+            onDelete={handleDelete}/>
           { isLoading && <LoadingBarProgress /> }
           <AudioPlayer ref={audioRef} audio = {audio} setCurrentTime={setCurrentTime} />
         </Box>
@@ -195,6 +205,8 @@ export default function DiarizationPage() {
           <SpeakerManager 
             speakersList={Object.values(diarizationData.speakersById)}  
             onSpeakersChange={handleSpeakerChange}
+            onMinSpeakersChange={setMinSpeakers}
+            onMaxSpeakersChange={setMaxSpeakers}
             open={isRightSidebarOpen}
           />
         </ResizableSidebar>

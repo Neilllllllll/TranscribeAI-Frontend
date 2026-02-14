@@ -2,15 +2,19 @@ import { Paper, Box, Typography } from "@mui/material";
 import type { DiarizationState } from "../types/ui_data.type";
 import SpeakerBubble from "./SpeakerBubble.tsx";
 import { useEffect, useRef } from "react";
+import DeleteButton from "../../../Shared/components/DeleteButton.tsx";
+import CopyButton from "../../../Shared/components/CopyButton.tsx";
+import { fullText } from "../utils/getFullText.tsx";
 
 interface TextBoxProps {
   diarizationData: DiarizationState;
   currentTime: number;
   gotoTimestamp: (time: number) => void;
   handleManualEdit: (objectId: number, segmentId: number, newText: string) => void;
+  onDelete: () => void;
 }
 
-export default function TextBox({ diarizationData, currentTime, gotoTimestamp, handleManualEdit }: TextBoxProps) {
+export default function TextBox({ diarizationData, currentTime, gotoTimestamp, handleManualEdit, onDelete }: TextBoxProps) {
   const activeSegmentRef = useRef<HTMLSpanElement>(null);
 
   // 2. Scroll automatique vers le segment actif
@@ -34,6 +38,10 @@ export default function TextBox({ diarizationData, currentTime, gotoTimestamp, h
         display: "flex", 
         flexDirection: "column"
       }}>
+      <Box sx ={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <CopyButton textToCopy={fullText(diarizationData)}></CopyButton>
+        <DeleteButton onDelete={onDelete} />
+      </Box>
       <Box sx={{ 
         flex: 1,      // Prend tout l'espace du Paper
         overflowY: "auto",

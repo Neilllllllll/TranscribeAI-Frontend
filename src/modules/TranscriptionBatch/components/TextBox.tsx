@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import CopyButton from '../../../Shared/components/CopyButton.tsx';
+import DeleteButton from '../../../Shared/components/DeleteButton.tsx';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -12,9 +13,10 @@ interface Props {
   currentTime: number;
   goToTimestamp?: (time: number) => void;
   onSegmentChange: (id: number, newText: string) => void;
+  onDelete: () => void;
 }
 
-export default function TextBox({ segments, currentTime, goToTimestamp, onSegmentChange }: Props) {
+export default function TextBox({ segments, currentTime, goToTimestamp, onSegmentChange, onDelete }: Props) {
   // 1. On stocke les segments dans un état local pour permettre l'édition
   const activeSegmentRef = useRef<HTMLSpanElement>(null);
   const theme = useTheme();
@@ -39,8 +41,9 @@ return (
         display: "flex", 
         flexDirection: "column"
       }}>
-      <Box>
+      <Box sx ={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <CopyButton textToCopy={fullText(segments ?? [])}></CopyButton>
+        <DeleteButton onDelete={onDelete} />
       </Box>
 
       <Box sx={{ height: "95%", overflowY: "auto", flexWrap: "wrap"}}>
@@ -61,6 +64,7 @@ return (
               }}
             >
               <span
+                spellCheck="false"
                 contentEditable
                 suppressContentEditableWarning
                 onBlur={(e) => onSegmentChange(segment.id, e.currentTarget.innerText)}

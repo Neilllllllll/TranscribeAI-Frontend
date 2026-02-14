@@ -40,3 +40,18 @@ L'idée est que chaque module doit fonctionner comme une mini-application **auto
 
 ### Le dossier Shared
 > **Fonction Principale :** Stocke les composants UI et utils globaux (utilisées dans plusieurs modules)
+
+TO DO : 
+# 📋 To-Do List : Optimisation Interface
+
+---
+
+### 🏗️ Structure & Layout
+
+
+- [ ] Créer un composant text box pour mutualiser entre diarization et batch
+
+### 💡 Veille / Inspiration
+- [ ] Analyser le site **Amurex** (*AI Invisible Companion*) pour la partie récapitulatif de réunion.
+
+---

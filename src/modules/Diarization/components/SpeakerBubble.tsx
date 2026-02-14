@@ -60,6 +60,7 @@ export default function SpeakerBubble({ segments, speaker, goToTimestamp, curren
           onClick={() => goToTimestamp?.(seg.start)} 
           >
           <span
+            spellCheck="false"
             contentEditable
             suppressContentEditableWarning
             onBlur={(e) => handleManualEdit ? handleManualEdit(objectId!, i, e.currentTarget.innerText) : null}

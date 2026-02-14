@@ -16,7 +16,7 @@ export const MODULE_ROUTES: Module[] = [
   },
   {
     id: 'diarization',
-    title: "Multi-voix",
+    title: "Réunions",
     description: "Identifiez automatiquement les différents locuteurs dans une conversation.",
     icon: <GroupsIcon />,
     path: "diarization",
@@ -24,7 +24,7 @@ export const MODULE_ROUTES: Module[] = [
   },
   {
     id: 'streaming',
-    title: "Dictée en temps réel",
+    title: "Temps réel",
     description: "Transcrivez l'audio en direct avec une latence minimale pour une expérience fluide.",
     icon: <RecordVoiceOverIcon />,
     path: "streaming",

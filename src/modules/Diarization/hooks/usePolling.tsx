@@ -13,7 +13,7 @@ interface UseDiarizationReturn {
   statusInfo: string | null;
 }
 
-export const usePolling = (audio: Audio | null) : UseDiarizationReturn => {
+export const usePolling = (audio: Audio | null, minSpeakers?: number, maxSpeakers?: number) : UseDiarizationReturn => {
   const [diarizationPayload, setDiarizationPayload] = useState<getStatusAPIResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +36,7 @@ export const usePolling = (audio: Audio | null) : UseDiarizationReturn => {
     const fetchProcess = async () => {
       try {
         // 1. Création du Job
-        const jobPayload = await createJob(audio, signal);
+        const jobPayload = await createJob(audio, minSpeakers, maxSpeakers, signal);
 
         const jobId = jobPayload.data.job_uuid;
         let attempts = 0;

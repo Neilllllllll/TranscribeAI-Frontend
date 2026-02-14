@@ -91,16 +91,20 @@ export default function TranscriptionBatchPage() {
      );
   };
 
+  const handleDelete = () => {
+    setSegments([]);
+    showAlert("Transcription supprimée", "success");
+  }
+
   return (
     <Box sx={{ display: 'flex', width: '100%', height: "100%"}}>
       {/* Barre d'outil */}
-
       <ResizableSidebar 
         open={isSidebarOpen}
         onToggle={toggleSidebar}
-        side="left" // Optionnel, car "right" est la valeur par défaut
+        side="left"
         title="Boite à outils"
-        expandedWidth={300} // Largeur personnalisée pour le côté droit
+        expandedWidth={300}
         collapsedWidth={50}
       >
         {/* Section 1 : Entrée Audio */}
@@ -153,7 +157,8 @@ export default function TranscriptionBatchPage() {
           segments={segments} 
           currentTime={currentTime}
           goToTimestamp={handleSeek} 
-          onSegmentChange={handleManualEdit}/>
+          onSegmentChange={handleManualEdit}
+          onDelete={handleDelete}/>
           { isLoading && <LoadingBarProgress /> }
           <AudioPlayer ref={audioRef} audio = {audio} setCurrentTime={setCurrentTime} />
         </Box>

@@ -44,15 +44,49 @@ export default function MainLayout() {
     }}>
         {/* 2. Header : Reste en haut naturellement (flex item) */}
       <Box component="nav" sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
-        <Box 
-          component="img" 
-          src={logo}
-          alt="Logo" 
-          sx={{ width: 60, height: 60 }} 
-        />
+        <Box sx ={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <Box 
+            component="img" 
+            src={logo}
+            alt="Logo" 
+            onClick={handleChange.bind(null, null, '/home')}
+            sx={{ width: 60, height: 60, cursor: 'pointer' }} 
+          />
+
+          <BottomNavigation
+            showLabels
+            value={currentMode?.fullPath}
+            onChange={handleChange}
+            sx ={{height: '100%', '& .MuiBottomNavigationAction-root': { minWidth: 100 } }}
+          >
+            <BottomNavigationAction 
+              label="Accueil" 
+              value="/home" 
+              icon={<HomeIcon />} 
+            />
+
+            {MODULE_ROUTES.map((route) => (
+              <BottomNavigationAction
+                key={route.id}
+                label={route.title}
+                value={route.fullPath}
+                icon={route.icon}
+                disabled={route.enable === false}
+                sx={{
+                  // Style spécifique pour l'état disabled
+                  "&.Mui-disabled": {
+                    cursor: "not-allowed", // Change le curseur pour indiquer que c'est désactivé
+                    pointerEvents: "auto", // Permet d'afficher le curseur même si c'est désactivé
+                    color: "text.disabled", // Grise le texte et l'icône
+                  }
+                }}
+              />
+            ))}
+          </BottomNavigation>
+        </Box>
 
         <Box>
-          { alertConfig.alert ? <Alert severity={alertConfig.alertType}>{alertConfig.alert}</Alert> : <Typography variant="h4" >{currentMode?.title}</Typography> }
+          { <Typography variant="h4" >{currentMode?.title}</Typography> }
         </Box>
 
         <IconButton onClick={colorMode.toggleColorMode} color="inherit">
@@ -76,35 +110,9 @@ export default function MainLayout() {
 
       {/* 4. Footer */}
       <Paper sx={{ position: 'relative'}} elevation={3}>
-        <BottomNavigation
-          showLabels
-          value={currentMode?.fullPath}
-          onChange={handleChange}
-        >
-          <BottomNavigationAction 
-            label="Accueil" 
-            value="/home" 
-            icon={<HomeIcon />} 
-          />
-
-          {MODULE_ROUTES.map((route) => (
-            <BottomNavigationAction
-              key={route.id}
-              label={route.title}
-              value={route.fullPath}
-              icon={route.icon}
-              disabled={route.enable === false}
-              sx={{
-                // Style spécifique pour l'état disabled
-                "&.Mui-disabled": {
-                  cursor: "not-allowed", // Change le curseur pour indiquer que c'est désactivé
-                  pointerEvents: "auto", // Permet d'afficher le curseur même si c'est désactivé
-                  color: "text.disabled", // Grise le texte et l'icône
-                }
-              }}
-            />
-          ))}
-        </BottomNavigation>
+        <Box sx={{ p: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          { alertConfig.alert && <Alert severity={alertConfig.alertType}>{alertConfig.alert}</Alert> }
+        </Box>
       </Paper>
     </Box>
   );
