@@ -178,7 +178,7 @@ export default function DiarizationPage() {
             <Chip label="Entrée Audio" size="small" sx={{ fontSize: '0.65rem' }} />
           </Divider>
         }
-        <Box sx={{ p: isLeftSidebarOpen ? 1 : 0, width: '100%', display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <Box sx={{ p: isLeftSidebarOpen ? 1 : 0, width: '100%', display: 'flex', flexDirection: 'column' }}>
           <AudioUpload onUploadEnd={handleAudioUpload} MAXSIZEBYTES_VAL={MAXSIZEAUDIO}/>
         </Box>
 

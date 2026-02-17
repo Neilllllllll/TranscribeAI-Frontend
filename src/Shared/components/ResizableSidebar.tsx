@@ -107,10 +107,8 @@ export default function ResizableSidebar({
         display: 'flex', 
         flexDirection: 'column', 
         // On centre toujours horizontalement pour que les icônes restent au milieu
-        alignItems: 'center', 
-        gap: 1,            
+        alignItems: 'center',           
         width: '100%',
-        pt: 1,
         overflowY: 'auto', 
         overflowX: 'hidden',
         flexGrow: 1,

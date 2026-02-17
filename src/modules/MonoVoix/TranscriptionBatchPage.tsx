@@ -113,7 +113,7 @@ export default function TranscriptionBatchPage() {
             <Chip label="Entrée Audio" size="small" sx={{ fontSize: '0.65rem' }} />
           </Divider>
         }
-        <Box sx={{ p: isSidebarOpen ? 1 : 0, width: '100%', display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <Box sx={{ p: isSidebarOpen ? 1 : 0, width: '100%', display: 'flex', flexDirection: 'column' }}>
           <AudioUpload onUploadEnd={handleAudioSetter} MAXSIZEBYTES_VAL={MAXSIZEAUDIO}/>
         </Box>
 
@@ -124,7 +124,7 @@ export default function TranscriptionBatchPage() {
             <Chip label="Édition" size="small" sx={{ fontSize: '0.65rem' }} />
           </Divider>
 
-          <Box sx={{ p: 1, width: '100%' }}>
+          <Box sx={{ paddingRight: 1, paddingLeft : 1, width: '100%' }}>
             <WordReplacement onReplace={handleGlobalReplace} />
           </Box>
         </>}
@@ -135,7 +135,7 @@ export default function TranscriptionBatchPage() {
             <Divider sx={{ my: 2, width: '90%' }}>
               <Chip label="Options d'exportation" size="small" sx={{ fontSize: '0.65rem' }} />
             </Divider>}
-            <Box>
+            <Box sx={{ width: '100%' }}>
               <Exporter textToExport={fullText(segments ?? [])}/>
             </Box>
           </>
