@@ -69,6 +69,7 @@ export const usePolling = (audio: Audio | null, minSpeakers?: number, maxSpeaker
         }
         
         if (!isComplete && !signal.aborted) {
+            setStatusInfo("Délai d'attente dépassé")
             throw new Error("Délai d'attente dépassé");
         }
 

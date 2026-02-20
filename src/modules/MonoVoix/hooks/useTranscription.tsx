@@ -69,6 +69,7 @@ export const useTranscription = (audio: Audio | null) : UseTranscriptionReturn =
         }
         
         if (!isComplete && !signal.aborted) {
+            setStatusInfo("Délai d'attente dépassé")
             throw new Error("Délai d'attente dépassé");
         }
 
