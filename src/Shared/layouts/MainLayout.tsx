@@ -12,7 +12,6 @@ import { IconButton } from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
 import {MODULE_ROUTES} from '../../core/router/routes.tsx'
-import logo from '../assets/logo.svg';
 import { useTheme } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import { useAlert } from '../contexts/AlertContext.tsx';
@@ -46,7 +45,7 @@ export default function MainLayout() {
         <Box sx ={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <Box 
             component="img" 
-            src={logo}
+            src="/assets/logo.svg"
             alt="Logo" 
             onClick={() => navigate('/home')}
             sx={{ width: 60, height: 60, cursor: 'pointer' }} 

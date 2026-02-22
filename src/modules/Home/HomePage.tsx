@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
-import logo from "../../Shared/assets/logo.svg"
 import { MODULE_ROUTES } from '../../core/router/routes.tsx';
 import HelpIcon from '@mui/icons-material/Help';
 
@@ -30,7 +29,7 @@ export default function HomePage() {
       <Stack spacing={2} alignItems="center" sx={{ mb: 8 }}>
         <Box 
           component="img" 
-          src={logo}
+          src={"/assets/logo.svg"}
           alt="Logo" 
           sx={{ width: 120, height: 120 }} 
         />

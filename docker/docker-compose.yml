@@ -1,7 +1,8 @@
 services:
   frontend:
-    build: .
-    image: transcribeai-frontend:test
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
     container_name: transcribeai-frontend
     ports:
       - "8080:80"
@@ -14,4 +15,6 @@ services:
       REACT_APP_MAX_TIME_PROCESSING_DIARIZATION: "${REACT_APP_MAX_TIME_PROCESSING_DIARIZATION}"
       REACT_APP_TIME_BETWEEN_EACH_POLLING_DIARIZATION: "${REACT_APP_TIME_BETWEEN_EACH_POLLING_DIARIZATION}"
       REACT_APP_MAX_SPEAKERS_DIARIZATION: "${REACT_APP_MAX_SPEAKERS_DIARIZATION}"
+    volumes:
+      - ./volumes/assets:/usr/share/nginx/html/assets:ro
     restart: unless-stopped
