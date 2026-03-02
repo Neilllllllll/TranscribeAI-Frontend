@@ -1,21 +1,34 @@
-export type JobStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED";
+export type JobStatus = "PENDING" | "PROCESSING" | "COMPLETED";
 
-// Base commune à toutes les réponses
-interface BaseJobData {
-  data:{
-    status: JobStatus,
-    job_id: string
-  }
+/**
+ * Réponse "success" commune
+ * Elle contient toujours { status: "success", data: { job_id, status } }
+ */
+interface BaseSuccessResponse {
+  status: "success";
+  data: {
+    status: JobStatus;
+    job_id: string;
+  };
 }
 
-// Cas spécifiques
-interface PendingData extends BaseJobData {
-  status: "PENDING";
-  position: number;
+/**
+ * Cas PENDING: data.status="PENDING" + position
+ */
+export interface PendingResponse extends BaseSuccessResponse {
+  data: BaseSuccessResponse["data"] & {
+    status: "PENDING";
+    position: number;
+  };
 }
 
-interface ProcessingData extends BaseJobData {
-  status: "PROCESSING";
+/**
+ * Cas PROCESSING: data.status="PROCESSING"
+ */
+export interface ProcessingResponse extends BaseSuccessResponse {
+  data: BaseSuccessResponse["data"] & {
+    status: "PROCESSING";
+  };
 }
 
 export interface TranscriptionSegment {
@@ -31,25 +44,31 @@ export interface TranscriptionResult {
   segments: TranscriptionSegment[];
 }
 
-interface CompletedData extends BaseJobData {
-  status: "COMPLETED";
-  result: TranscriptionResult; 
-  transcription_time: number;
+/**
+ * Cas COMPLETED: data.status="COMPLETED" + result + transcription_time
+ */
+export interface CompletedResponse extends BaseSuccessResponse {
+  data: BaseSuccessResponse["data"] & {
+    status: "COMPLETED";
+    result: TranscriptionResult;
+    transcription_time: number;
+  };
 }
 
-interface FailedData extends BaseJobData {
-  status: "FAILED";
-  error_message?: string;
+/**
+ * Union discriminante : le discriminant est data.status
+ */
+export type SuccessAPIResponse =
+  | PendingResponse
+  | ProcessingResponse
+  | CompletedResponse;
+
+/**
+ * cas d'erreur : { status: "error" | "FAILED", message: string }
+ */
+export interface ErrorAPIResponse {
+  status: "error" | "FAILED";
+  message: string;
 }
 
-// L'Union Discriminante : Le type final
-export type TranscriptionJobData = 
-  | PendingData 
-  | ProcessingData 
-  | CompletedData 
-  | FailedData;
-
-export interface getStatusAPIResponse {
-  status: "success" | "error";
-  data: TranscriptionJobData;
-}
+export type APIResponse = SuccessAPIResponse | ErrorAPIResponse;
