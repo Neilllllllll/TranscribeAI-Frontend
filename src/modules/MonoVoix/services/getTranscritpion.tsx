@@ -3,17 +3,17 @@ import {APIResponse} from '../types/api_data.ts'
 
 // Envoie une requete GET pour récupérer la transcription et/ou l'état du job
 export async function getTranscriptionByUuid(
-  job_uuid: string,
+  job_id: string,
   signal?: AbortSignal
 ): Promise<APIResponse> {
 
   // Vérifie les données manquantes
-  if (!job_uuid) throw new Error("Aucun uuid fournit.");
+  if (!job_id) throw new Error("Aucun job_id fourni.");
   if (!API_KEY) throw new Error("Aucune API key fournie.");
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/api/batchTranscription/result?job_uuid=` + job_uuid, {
+    response = await fetch(`${BASE_URL}/api/batchTranscription/result?job_id=` + job_id, {
       headers: { "X-API-KEY": API_KEY },
       signal
     });
