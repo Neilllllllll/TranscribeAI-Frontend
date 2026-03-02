@@ -1,7 +1,7 @@
 // Schema de réponse lorsque l'on créer un job
 interface data{
-    job_uuid: string,
-    status: string
+    job_id: string,
+    message: string
 }
 
 export interface CreateJobAPIResponse{
